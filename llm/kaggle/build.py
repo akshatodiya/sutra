@@ -7,6 +7,7 @@ usage:
 push: kaggle kernels push -p kaggle/jobs/<name> --accelerator NvidiaTeslaT4 -t <seconds>
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -15,7 +16,7 @@ LLM = HERE.parent
 sys.path.insert(0, str(LLM))
 import prompts  # noqa: E402
 
-USER = "akshatodiya"
+USER = os.environ["KAGGLE_USERNAME"]  # your Kaggle username, used in the kernel id
 TEACHER = "Qwen/Qwen2.5-Coder-7B-Instruct"
 STUDENT = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
 BASE = {"sglang": "sglang==0.5.4.post3",  # newest release that runs on a T4 with the native-op patch

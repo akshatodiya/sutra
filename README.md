@@ -143,6 +143,7 @@ hardware will hit:
 cd fp && npm ci && npm run build && npm test            # interpreter, CLI and visualizer
 cd ../llm && python3 -m venv .venv && .venv/bin/pip install kaggle curatorkit==0.1.22 auditkit==1.1.3
 python tasks.py                                         # task bank -> data/tasks_{train,eval}.jsonl
+export KAGGLE_USERNAME=<your Kaggle username>
 python kaggle/build.py teacher_gen      # then: kaggle kernels push -p kaggle/jobs/teacher_gen --accelerator NvidiaTeslaT4
 python verify.py runs/teacher_gen/outputs_Qwen2.5-Coder-7B-Instruct.jsonl runs/teacher_gen/verified.jsonl
 python kaggle/build.py teacher_repair   # push, then verify the same way into runs/teacher_repair/verified.jsonl
