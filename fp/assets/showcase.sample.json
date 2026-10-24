@@ -1,0 +1,22 @@
+[
+  {
+    "task": "Count the negative elements of xs.",
+    "expr": "solve [3, -1, -4]",
+    "expect": "2",
+    "answers": [
+      { "model": "base", "program": "solve xs = length xs", "verdict": "wrong_answer" },
+      { "model": "raw", "program": "solve xs = length (filter (\\x -> x < 0) xs", "verdict": "parse_error" },
+      { "model": "curated", "program": "solve xs = length (filter (\\x -> x < 0) xs)", "verdict": "pass" }
+    ]
+  },
+  {
+    "task": "Reverse the elements of xs.",
+    "expr": "solve [1, 2, 3]",
+    "expect": "[3, 2, 1]",
+    "answers": [
+      { "model": "base", "program": "solve xs = reverse xs", "verdict": "pass" },
+      { "model": "raw", "program": "solve xs = xs", "verdict": "wrong_answer" },
+      { "model": "curated", "program": "solve xs = foldl (\\acc x -> x : acc) [] xs", "verdict": "pass" }
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+-- Try: foldr prepend [] [1, 2, 3, 4]
+-- Value: [1, 2, 3, 4]
+prepend x acc = x : acc

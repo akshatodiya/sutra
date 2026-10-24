@@ -1,0 +1,8 @@
+{"id":"t17","program":"double x = x * 2","tests":[{"expr":"map double [1,2,3]","expect":"[2, 4, 6]"}]}
+{"id":"wrong-value","program":"","tests":[{"expr":"1 + 2","expect":"4"}]}
+{"id":"runtime-and-recovery","program":"","tests":[{"expr":"head []","expect":"0"},{"expr":"let y = 3 in y * y","expect":"9"}]}
+{"id":"bad-program","program":"solve =","tests":[{"expr":"solve","expect":"0"}]}
+{"id":"bad-schema","program":42,"tests":[]}
+{broken JSON
+{"id":"after-bad","program":"","tests":[{"expr":"True","expect":"True"}]}
+{"id":"bounded-loop","program":"loop n = loop n","tests":[{"expr":"loop 1","expect":"0"}],"maxSteps":7}

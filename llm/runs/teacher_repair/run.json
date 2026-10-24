@@ -1,0 +1,33 @@
+{
+ "job": {
+  "sglang": "sglang==0.5.4.post3",
+  "train_pip": "--no-deps aligntune==0.1.28 curatorkit==0.1.22 && pip install -q trl==1.7.1 'peft>=0.18' 'torchao>=0.16' sqlglot pypdf python-docx tensorboard",
+  "ctx": 4096,
+  "concurrency": 128,
+  "server_flags": [
+   "--attention-backend",
+   "triton",
+   "--sampling-backend",
+   "pytorch",
+   "--disable-cuda-graph",
+   "--disable-custom-all-reduce",
+   "--max-running-requests",
+   "128"
+  ],
+  "models": [
+   "Qwen/Qwen2.5-Coder-7B-Instruct"
+  ],
+  "tp": 2,
+  "mem": 0.75
+ },
+ "n_requests": 456,
+ "models": {
+  "Qwen2.5-Coder-7B-Instruct": {
+   "path": "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "up_seconds": 196,
+   "gen_seconds": 89
+  }
+ },
+ "sglang_pip_rc": 0,
+ "total_seconds": 483
+}

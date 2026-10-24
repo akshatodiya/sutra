@@ -1,0 +1,40 @@
+[{"stream_name":"stdout","time":615.157942174,"data":"{\n"}
+,{"stream_name":"stdout","time":615.158017617,"data":" \"job\": {\n"}
+,{"stream_name":"stdout","time":615.158023295,"data":"  \"sglang\": \"sglang==0.5.4.post3\",\n"}
+,{"stream_name":"stdout","time":615.158027841,"data":"  \"train_pip\": \"--no-deps aligntune==0.1.28 curatorkit==0.1.22 \u0026\u0026 pip install -q trl==1.7.1 'peft\u003e=0.18' 'torchao\u003e=0.16' sqlglot pypdf python-docx tensorboard\",\n"}
+,{"stream_name":"stdout","time":615.15803395,"data":"  \"ctx\": 4096,\n"}
+,{"stream_name":"stdout","time":615.158038282,"data":"  \"concurrency\": 128,\n"}
+,{"stream_name":"stdout","time":615.15804243,"data":"  \"server_flags\": [\n"}
+,{"stream_name":"stdout","time":615.158046438,"data":"   \"--attention-backend\",\n"}
+,{"stream_name":"stdout","time":615.158050584,"data":"   \"triton\",\n"}
+,{"stream_name":"stdout","time":615.158055056,"data":"   \"--sampling-backend\",\n"}
+,{"stream_name":"stdout","time":615.158059172,"data":"   \"pytorch\",\n"}
+,{"stream_name":"stdout","time":615.158063188,"data":"   \"--disable-cuda-graph\",\n"}
+,{"stream_name":"stdout","time":615.158067702,"data":"   \"--disable-custom-all-reduce\",\n"}
+,{"stream_name":"stdout","time":615.158071926,"data":"   \"--max-running-requests\",\n"}
+,{"stream_name":"stdout","time":615.158076026,"data":"   \"128\"\n"}
+,{"stream_name":"stdout","time":615.158080155,"data":"  ],\n"}
+,{"stream_name":"stdout","time":615.158084219,"data":"  \"models\": [\n"}
+,{"stream_name":"stdout","time":615.158088617,"data":"   \"Qwen/Qwen2.5-Coder-7B-Instruct\"\n"}
+,{"stream_name":"stdout","time":615.158092711,"data":"  ],\n"}
+,{"stream_name":"stdout","time":615.158096598,"data":"  \"tp\": 2,\n"}
+,{"stream_name":"stdout","time":615.158100757,"data":"  \"mem\": 0.75\n"}
+,{"stream_name":"stdout","time":615.158104878,"data":" },\n"}
+,{"stream_name":"stdout","time":615.158108799,"data":" \"n_requests\": 88,\n"}
+,{"stream_name":"stdout","time":615.158112996,"data":" \"models\": {\n"}
+,{"stream_name":"stdout","time":615.158117068,"data":"  \"Qwen2.5-Coder-7B-Instruct\": {\n"}
+,{"stream_name":"stdout","time":615.158121312,"data":"   \"path\": \"Qwen/Qwen2.5-Coder-7B-Instruct\",\n"}
+,{"stream_name":"stdout","time":615.158125744,"data":"   \"up_seconds\": 201,\n"}
+,{"stream_name":"stdout","time":615.158129917,"data":"   \"gen_seconds\": 159\n"}
+,{"stream_name":"stdout","time":615.158133986,"data":"  }\n"}
+,{"stream_name":"stdout","time":615.158137937,"data":" },\n"}
+,{"stream_name":"stdout","time":615.158141934,"data":" \"sglang_pip_rc\": 0,\n"}
+,{"stream_name":"stdout","time":615.158146066,"data":" \"total_seconds\": 614\n"}
+,{"stream_name":"stdout","time":615.1581502,"data":"}\n"}
+,{"stream_name":"stderr","time":617.580540904,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":617.580570897,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":617.947179892,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":617.947212724,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":619.081111943,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":620.172369805,"data":"[NbConvertApp] Writing 406231 bytes to __results__.html\n"}
+]

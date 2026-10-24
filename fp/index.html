@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ee">
+    <meta name="description" content="Explore a tiny functional language, one visible reduction at a time.">
+    <title>Sutra — a language, made visible</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="assets/style.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>Sutra needs JavaScript to run its local Elm interpreter.</noscript>
+    <script src="dist/visualizer.js"></script>
+    <script src="assets/showcase.js"></script>
+    <script>Elm.Main.init({ node: document.getElementById('app'), flags: window.SUTRA_SHOWCASE || { entries: [], isSample: false } });</script>
+  </body>
+</html>

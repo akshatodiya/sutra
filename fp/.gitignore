@@ -1,0 +1,9 @@
+node_modules/
+elm-stuff/
+.elm-cache/
+dist/test-worker.js
+
+.build/
+
+.playwright-browsers/
+test/artifacts/

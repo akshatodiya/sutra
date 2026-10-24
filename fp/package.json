@@ -1,0 +1,23 @@
+{
+  "devDependencies": {
+    "elm": "0.19.3-0",
+    "playwright": "1.64.1"
+  },
+  "name": "sutra-fp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sutra language core and visualizer, written in Elm",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build:tests": "ELM_HOME=.elm-cache elm make test/Worker.elm --output=dist/test-worker.js",
+    "test": "npm run build && npm run test:core && npm run test:cli",
+    "build": "node scripts/build.cjs",
+    "test:core": "npm run build:tests && node test/core.test.cjs",
+    "test:cli": "node test/cli.test.cjs",
+    "test:ui": "PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers node test/visualizer.test.cjs",
+    "build:showcase": "node scripts/build-showcase.cjs",
+    "test:showcase": "node test/showcase-build.test.cjs && PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers node test/showcase.test.cjs"
+  }
+}

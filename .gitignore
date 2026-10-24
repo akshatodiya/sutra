@@ -1,0 +1,17 @@
+node_modules/
+elm-stuff/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+llm/work/
+*.safetensors
+*.bin
+.env
+kaggle.json
+llm/kaggle/jobs/
+fp/.elm-cache/
+# trained LoRA adapters: only the two files needed to load them (tokenizer = the base model's)
+llm/runs/*/adapters/*/*
+!llm/runs/*/adapters/*/adapter_config.json
+!llm/runs/*/adapters/*/adapter_model.safetensors

@@ -1,0 +1,65 @@
+[{"stream_name":"stdout","time":2131.080368914,"data":"{\n"}
+,{"stream_name":"stdout","time":2131.080431539,"data":" \"job\": {\n"}
+,{"stream_name":"stdout","time":2131.080438088,"data":"  \"sglang\": \"sglang==0.5.4.post3\",\n"}
+,{"stream_name":"stdout","time":2131.080443262,"data":"  \"train_pip\": \"--no-deps aligntune==0.1.28 curatorkit==0.1.22 \u0026\u0026 pip install -q trl==1.7.1 peft==0.20.0 torchao==0.18.0 sqlglot pypdf python-docx tensorboard\",\n"}
+,{"stream_name":"stdout","time":2131.080448985,"data":"  \"ctx\": 4096,\n"}
+,{"stream_name":"stdout","time":2131.080453537,"data":"  \"concurrency\": 128,\n"}
+,{"stream_name":"stdout","time":2131.080458105,"data":"  \"server_flags\": [\n"}
+,{"stream_name":"stdout","time":2131.080462623,"data":"   \"--attention-backend\",\n"}
+,{"stream_name":"stdout","time":2131.080467254,"data":"   \"triton\",\n"}
+,{"stream_name":"stdout","time":2131.080471758,"data":"   \"--sampling-backend\",\n"}
+,{"stream_name":"stdout","time":2131.080476259,"data":"   \"pytorch\",\n"}
+,{"stream_name":"stdout","time":2131.080480946,"data":"   \"--disable-cuda-graph\",\n"}
+,{"stream_name":"stdout","time":2131.080485588,"data":"   \"--disable-custom-all-reduce\",\n"}
+,{"stream_name":"stdout","time":2131.080490123,"data":"   \"--max-running-requests\",\n"}
+,{"stream_name":"stdout","time":2131.080494649,"data":"   \"128\"\n"}
+,{"stream_name":"stdout","time":2131.080499283,"data":"  ],\n"}
+,{"stream_name":"stdout","time":2131.080503617,"data":"  \"models\": [\n"}
+,{"stream_name":"stdout","time":2131.080508127,"data":"   \"Qwen/Qwen2.5-Coder-1.5B-Instruct\"\n"}
+,{"stream_name":"stdout","time":2131.080512715,"data":"  ],\n"}
+,{"stream_name":"stdout","time":2131.080517042,"data":"  \"tp\": 1,\n"}
+,{"stream_name":"stdout","time":2131.08052156,"data":"  \"mem\": 0.75\n"}
+,{"stream_name":"stdout","time":2131.080526462,"data":" },\n"}
+,{"stream_name":"stdout","time":2131.080530848,"data":" \"n_requests\": 39,\n"}
+,{"stream_name":"stdout","time":2131.080535322,"data":" \"models\": {\n"}
+,{"stream_name":"stdout","time":2131.080539791,"data":"  \"Qwen2.5-Coder-1.5B-Instruct\": {\n"}
+,{"stream_name":"stdout","time":2131.080544391,"data":"   \"path\": \"Qwen/Qwen2.5-Coder-1.5B-Instruct\",\n"}
+,{"stream_name":"stdout","time":2131.080549244,"data":"   \"up_seconds\": 101,\n"}
+,{"stream_name":"stdout","time":2131.080553764,"data":"   \"gen_seconds\": 52\n"}
+,{"stream_name":"stdout","time":2131.080558297,"data":"  },\n"}
+,{"stream_name":"stdout","time":2131.080562653,"data":"  \"raw\": {\n"}
+,{"stream_name":"stdout","time":2131.080567106,"data":"   \"path\": \"/kaggle/tmp/merged/raw\",\n"}
+,{"stream_name":"stdout","time":2131.080571702,"data":"   \"up_seconds\": 46,\n"}
+,{"stream_name":"stdout","time":2131.08057635,"data":"   \"gen_seconds\": 49\n"}
+,{"stream_name":"stdout","time":2131.080580894,"data":"  },\n"}
+,{"stream_name":"stdout","time":2131.080585202,"data":"  \"curated\": {\n"}
+,{"stream_name":"stdout","time":2131.080589661,"data":"   \"path\": \"/kaggle/tmp/merged/curated\",\n"}
+,{"stream_name":"stdout","time":2131.080594392,"data":"   \"up_seconds\": 46,\n"}
+,{"stream_name":"stdout","time":2131.080598851,"data":"   \"gen_seconds\": 65\n"}
+,{"stream_name":"stdout","time":2131.080603421,"data":"  }\n"}
+,{"stream_name":"stdout","time":2131.080607742,"data":" },\n"}
+,{"stream_name":"stdout","time":2131.080612046,"data":" \"train_pip_rc\": 0,\n"}
+,{"stream_name":"stdout","time":2131.080617159,"data":" \"train_versions\": \"accelerate                            1.14.0\\naligntune                             0.1.28\\ncuratorkit                            0.1.22\\ndatasets                              4.8.5\\npeft                                  0.20.0\\ntorch                                 2.11.0+cu128\\ntorchao                               0.18.0\\ntransformers                          5.16.1\\ntrl                                   1.7.1\\n\",\n"}
+,{"stream_name":"stdout","time":2131.080631659,"data":" \"train\": {\n"}
+,{"stream_name":"stdout","time":2131.080636304,"data":"  \"raw\": {\n"}
+,{"stream_name":"stdout","time":2131.080640804,"data":"   \"rc\": 0,\n"}
+,{"stream_name":"stdout","time":2131.080645657,"data":"   \"rows\": 295,\n"}
+,{"stream_name":"stdout","time":2131.08066496,"data":"   \"seconds\": 808\n"}
+,{"stream_name":"stdout","time":2131.08066998,"data":"  },\n"}
+,{"stream_name":"stdout","time":2131.080674295,"data":"  \"curated\": {\n"}
+,{"stream_name":"stdout","time":2131.080678698,"data":"   \"rc\": 0,\n"}
+,{"stream_name":"stdout","time":2131.080683172,"data":"   \"rows\": 295,\n"}
+,{"stream_name":"stdout","time":2131.080687483,"data":"   \"seconds\": 737\n"}
+,{"stream_name":"stdout","time":2131.080692012,"data":"  }\n"}
+,{"stream_name":"stdout","time":2131.080696447,"data":" },\n"}
+,{"stream_name":"stdout","time":2131.08070085,"data":" \"sglang_pip_rc\": 0,\n"}
+,{"stream_name":"stdout","time":2131.080705452,"data":" \"sglang_versions\": \"flashinfer-python         0.5.0\\nsgl-kernel                0.3.16.post4\\nsglang                    0.5.4.post3\\ntorch                     2.8.0\\ntransformers              4.57.1\\n\",\n"}
+,{"stream_name":"stdout","time":2131.080710983,"data":" \"total_seconds\": 2130\n"}
+,{"stream_name":"stdout","time":2131.08071545,"data":"}\n"}
+,{"stream_name":"stderr","time":2133.247704686,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2133.247737844,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2133.475424719,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2133.475460996,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2134.432388944,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2135.221115275,"data":"[NbConvertApp] Writing 1019929 bytes to __results__.html\n"}
+]

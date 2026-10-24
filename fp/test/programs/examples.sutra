@@ -1,0 +1,4 @@
+double x = x * 2
+solve xs = sum (map double xs)
+fact n = if n <= 1 then 1 else n * fact (n - 1)
+loop n = loop n
