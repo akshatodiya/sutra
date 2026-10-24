@@ -14,11 +14,11 @@
 
 | Step | Input | Passed | Recovered | Rejected | Forward |
 |------|-------|--------|-----------|----------|---------|
-| Rows | 2088 | 2088 | — | 0 | 2088 |
+| Rows | 2088 | 2088 | - | 0 | 2088 |
 | InterpreterGate | 2088 | 1314 | 0 | 774 | 1314 |
-| ExactDeduplicator | 1314 | 319 | — | — | 319 |
-| FewestSteps | 319 | 295 | — | — | 295 |
-| MessagesExporter | — | 295 | — | — | 295 |
+| ExactDeduplicator | 1314 | 319 | - | - | 319 |
+| FewestSteps | 319 | 295 | - | - | 295 |
+| MessagesExporter | - | 295 | - | - | 295 |
 
 ## Gate Pass Rates and Rejection Breakdown
 

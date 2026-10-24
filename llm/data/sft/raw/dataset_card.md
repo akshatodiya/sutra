@@ -14,9 +14,9 @@
 
 | Step | Input | Passed | Recovered | Rejected | Forward |
 |------|-------|--------|-----------|----------|---------|
-| Rows | 1632 | 1632 | — | 0 | 1632 |
-| MatchTaskCounts | 1632 | 295 | — | — | 295 |
-| MessagesExporter | — | 295 | — | — | 295 |
+| Rows | 1632 | 1632 | - | 0 | 1632 |
+| MatchTaskCounts | 1632 | 295 | - | - | 295 |
+| MessagesExporter | - | 295 | - | - | 295 |
 
 ## Gate Pass Rates and Rejection Breakdown
 

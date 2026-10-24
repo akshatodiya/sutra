@@ -217,15 +217,15 @@ view model =
                 [ span [ A.class "brand-symbol", A.attribute "aria-hidden" "true" ] [ text "λ" ]
                 , span [ A.class "brand-name" ] [ text "Sutra" ]
                 , span [ A.class "brand-divider" ] []
-                , span [ A.class "brand-caption" ] [ text "A language, made visible." ]
+                , span [ A.class "brand-caption" ] [ text "A tiny language you can watch run" ]
                 ]
-            , div [ A.class "local-badge" ] [ span [ A.class "status-dot" ] [], text "Runs entirely in your browser" ]
+            , div [ A.class "local-badge" ] [ span [ A.class "status-dot" ] [], text "Works offline in your browser" ]
             ]
         , main_ []
             [ section [ A.class "intro" ]
-                [ p [ A.class "eyebrow" ] [ text "THE SMALL-STEP PLAYGROUND" ]
-                , h1 [] [ text "See how a program", Html.br [] [], span [] [ text "becomes a value." ] ]
-                , p [ A.class "intro-copy" ] [ text "A tiny functional language. Every rewrite in the open. Pick an example, follow a function, and watch the cells move." ]
+                [ p [ A.class "eyebrow" ] [ text "STEP-BY-STEP PLAYGROUND" ]
+                , h1 [] [ text "Watch a program", Html.br [] [], span [] [ text "turn into an answer." ] ]
+                , p [ A.class "intro-copy" ] [ text "Pick an example and press Step. Every press makes one small change, so you can see exactly how the answer is worked out." ]
                 , div [ A.class "intro-note" ] [ span [] [ text "01" ], text " Edit", span [] [ text "02" ], text " Step", span [] [ text "03" ], text " Understand" ]
                 ]
             , div [ A.class "view-switch", A.attribute "role" "group", A.attribute "aria-label" "Visualizer view" ]
@@ -247,7 +247,7 @@ view model =
                                 ]
             ]
         , footer [ A.class "footer" ]
-            [ span [] [ text "SUTRA", span [ A.class "footer-separator" ] [ text "/" ], text "Pure functions. Visible computation." ]
+            [ span [] [ text "SUTRA", span [ A.class "footer-separator" ] [ text "/" ], text "One small step at a time." ]
             , span [] [ text "Written in Elm · Syntax Error 2026" ]
             ]
         ]
@@ -267,9 +267,9 @@ viewAnswerContext model =
         Just context ->
             div [ A.class "answer-context", A.attribute "data-testid" "answer-context" ]
                 [ div []
-                    [ p [ A.class "field-label" ] [ text ("INSPECTING " ++ String.toUpper context.model) ]
+                    [ p [ A.class "field-label" ] [ text (String.toUpper context.model ++ " MODEL'S ANSWER") ]
                     , h2 [] [ text context.task ]
-                    , p [] [ text "Reported verdict: ", span [ A.class ("verdict-badge verdict-" ++ context.verdict) ] [ text (Showcase.verdictLabel context.verdict) ], text " · Expected example value: ", code [] [ text context.expect ] ]
+                    , p [] [ text "Result: ", span [ A.class ("verdict-badge verdict-" ++ context.verdict) ] [ text (Showcase.verdictLabel context.verdict) ], text " · Expected answer: ", code [] [ text context.expect ] ]
                     ]
                 , button [ A.type_ "button", A.class "control-button button-secondary", onClick (ShowPage ModelAnswers) ] [ text "Back to model answers" ]
                 ]
@@ -283,15 +283,15 @@ viewEditor model =
             , span [ A.class "language-tag" ] [ text "SUTRA" ]
             ]
         , div [ A.class "editor-body" ]
-            [ label [ A.for "example-picker", A.class "field-label" ] [ text "START WITH AN EXAMPLE" ]
+            [ label [ A.for "example-picker", A.class "field-label" ] [ text "PICK AN EXAMPLE" ]
             , select [ A.id "example-picker", A.class "example-picker", A.value model.example, onInput ChooseExample, A.attribute "aria-label" "Example program" ]
                 (option [ A.value "custom", A.disabled True, A.selected (model.example == "custom") ] [ text "Custom program" ]
                     :: List.map (\example -> option [ A.value example.id, A.selected (model.example == example.id) ] [ text example.name ]) Examples.all
                 )
             , p [ A.class "example-description" ]
-                [ text (Examples.find model.example |> Maybe.map .description |> Maybe.withDefault "Your own definitions and expression. Step or Run to begin.") ]
+                [ text (Examples.find model.example |> Maybe.map .description |> Maybe.withDefault "Your own program. Press Step or Run to start.") ]
             , div [ A.class "field-heading" ]
-                [ label [ A.for "program-source", A.class "field-label" ] [ text "DEFINITIONS" ]
+                [ label [ A.for "program-source", A.class "field-label" ] [ text "PROGRAM" ]
                 , span [] [ text "editable" ]
                 ]
             , div [ A.class "code-editor" ]
@@ -303,7 +303,7 @@ viewEditor model =
                     , A.attribute "autocapitalize" "off", A.attribute "autocomplete" "off"
                     ] []
                 ]
-            , label [ A.for "expression-source", A.class "field-label expression-label" ] [ text "EXPRESSION TO EVALUATE" ]
+            , label [ A.for "expression-source", A.class "field-label expression-label" ] [ text "WHAT TO RUN" ]
             , div [ A.class "expression-input-wrap" ]
                 [ span [ A.attribute "aria-hidden" "true" ] [ text "›" ]
                 , input [ A.id "expression-source", A.value model.expression, onInput EditExpression, A.spellcheck False, A.attribute "aria-label" "Expression", A.attribute "autocapitalize" "off" ] []
@@ -315,7 +315,7 @@ viewEditor model =
                 ]
             , div [ A.class "language-note" ]
                 [ span [ A.attribute "aria-hidden" "true" ] [ text "↳" ]
-                , p [] [ text "Numbers, lists, lambdas, local bindings, and recursion. Small pieces; interesting behavior." ]
+                , p [] [ text "Supports numbers, lists, lambdas, let, if and recursion." ]
                 ]
             ]
         ]
@@ -358,19 +358,19 @@ viewExecution model =
                 , span [] [ text "when not editing" ]
                 ]
             , div [ A.class "trace-heading" ]
-                [ div [ A.class "step-count" ] [ span [ A.attribute "data-testid" "step-counter", A.attribute "data-step" (String.fromInt count) ] [ text (String.padLeft 2 '0' (String.fromInt count)) ], text " reductions" ]
+                [ div [ A.class "step-count" ] [ span [ A.attribute "data-testid" "step-counter", A.attribute "data-step" (String.fromInt count) ] [ text (String.padLeft 2 '0' (String.fromInt count)) ], text " steps" ]
                 , span [ A.class "rule-pill", A.attribute "data-testid" "reduction-rule" ]
-                    [ text (frame |> Maybe.andThen .rule |> Maybe.map ruleLabel |> Maybe.withDefault "Initial expression") ]
+                    [ text (frame |> Maybe.andThen .rule |> Maybe.map ruleLabel |> Maybe.withDefault "Start") ]
                 ]
             , viewCurrent model frame
-            , div [ A.class "highlight-key" ] [ span [] [], text "Highlighted: the term rewritten in the last step" ]
+            , div [ A.class "highlight-key" ] [ span [] [], text "Yellow = the part that changed in the last step" ]
             , viewActivity (frame |> Maybe.andThen .activity)
             , case error of
                 Just message -> viewError message
                 Nothing ->
                     if done then
                         div [ A.class "result-panel", A.attribute "data-testid" "result-panel", A.attribute "aria-live" "polite" ]
-                            [ div [] [ span [ A.class "result-icon" ] [ text "✓" ], span [ A.class "field-label" ] [ text "FINAL VALUE" ] ]
+                            [ div [] [ span [ A.class "result-icon" ] [ text "✓" ], span [ A.class "field-label" ] [ text "ANSWER" ] ]
                             , code [ A.attribute "data-testid" "final-value" ] [ text (frame |> Maybe.map (.expression >> Print.canonical) |> Maybe.withDefault "") ]
                             , case model.answerContext of
                                 Nothing -> text ""
@@ -382,7 +382,7 @@ viewExecution model =
                                         [ text (if value == context.expect then "Matches this example." else "Does not match this example. Expected " ++ context.expect ++ ".") ]
                             ]
                     else
-                        p [ A.class "execution-hint" ] [ text (if model.session == Nothing then "Your edits are ready. Step or Run to evaluate them." else "Step changes one term. Back returns to the exact previous state.") ]
+                        p [ A.class "execution-hint" ] [ text (if model.session == Nothing then "Press Step or Run to see your changes." else "Each step changes one small part. Back takes you to the previous step.") ]
             ]
         ]
 
@@ -409,17 +409,17 @@ control name icon className disabled message =
 viewCurrent : Model -> Maybe Session.Frame -> Html Msg
 viewCurrent model frame =
     div [ A.class "expression-stage" ]
-        [ div [ A.class "stage-label" ] [ text "CURRENT EXPRESSION" ]
+        [ div [ A.class "stage-label" ] [ text "NOW" ]
         , div [ A.class "current-expression", A.attribute "data-testid" "current-expression", A.attribute "aria-label" "Current expression" ]
             [ case frame of
                 Just current -> ExpressionView.view current.focus current.expression
-                Nothing -> span [ A.class "empty-expression" ] [ text "Your next reduction starts here." ]
+                Nothing -> span [ A.class "empty-expression" ] [ text "The next step starts from here." ]
             ]
         , case model.session |> Maybe.andThen Session.previous of
             Nothing -> text ""
             Just before ->
                 div [ A.class "previous-expression" ]
-                    [ span [ A.class "stage-label" ] [ text "BEFORE THIS STEP" ]
+                    [ span [ A.class "stage-label" ] [ text "ONE STEP BEFORE" ]
                     , code [ A.attribute "aria-label" "Previous expression" ] [ text (Print.source before.expression) ]
                     ]
         ]
@@ -429,14 +429,14 @@ viewActivity : Maybe Session.VisualActivity -> Html Msg
 viewActivity activity =
     div [ A.class "activity-panel", A.attribute "data-testid" "list-activity" ]
         [ div [ A.class "activity-heading" ]
-            [ span [ A.class "field-label" ] [ text "LIST ACTIVITY" ]
-            , activity |> Maybe.map (\active -> code [ A.class "operation-tag", A.attribute "data-testid" "active-operation" ] [ text active.name ]) |> Maybe.withDefault (span [ A.class "activity-empty-tag" ] [ text "waiting for a list" ])
+            [ span [ A.class "field-label" ] [ text "THE LIST" ]
+            , activity |> Maybe.map (\active -> code [ A.class "operation-tag", A.attribute "data-testid" "active-operation" ] [ text active.name ]) |> Maybe.withDefault (span [ A.class "activity-empty-tag" ] [ text "no list yet" ])
             ]
         , case activity of
             Nothing ->
                 div [ A.class "activity-placeholder" ]
                     [ div [ A.class "placeholder-cells", A.attribute "aria-hidden" "true" ] [ span [] [], span [] [], span [] [], span [] [] ]
-                    , p [] [ text "Map, filter, and fold make their next move here." ]
+                    , p [] [ text "When map, filter or fold runs, you can follow the list here." ]
                     ]
             Just active ->
                 let
@@ -505,14 +505,14 @@ viewError message =
 ruleLabel : String -> String
 ruleLabel rule =
     case rule of
-        "definition" -> "Unfold definition"
-        "builtin_reference" -> "Resolve built-in"
-        "partial_application" -> "Apply one argument"
-        "beta" -> "Substitute argument"
-        "let" -> "Substitute local value"
-        "operator" -> "Evaluate operator"
-        "short_circuit" -> "Short-circuit branch"
-        "boolean_operator" -> "Evaluate boolean"
-        "if_true" -> "Choose true branch"
-        "if_false" -> "Choose false branch"
+        "definition" -> "Use a definition"
+        "builtin_reference" -> "Use a built-in"
+        "partial_application" -> "Pass one argument"
+        "beta" -> "Put the argument in"
+        "let" -> "Put the let value in"
+        "operator" -> "Do the math"
+        "short_circuit" -> "Skip the other side"
+        "boolean_operator" -> "Work out true/false"
+        "if_true" -> "Take the then branch"
+        "if_false" -> "Take the else branch"
         _ -> String.replace "_cons" " · visit cell" rule |> String.replace "_empty" " · empty list"

@@ -6423,7 +6423,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Sutra$Examples$first = {ab: 'map', aj: 'Map · double each number', m: '-- A small function, applied to every cell.\u000Adouble x = x * 2', h: 'map double [1, 2, 3, 4]', bg: 'Apply a function to each cell, one at a time.'};
+var $author$project$Sutra$Examples$first = {ab: 'map', aj: 'Map · double each number', m: '-- A small function, applied to every cell.\u000Adouble x = x * 2', h: 'map double [1, 2, 3, 4]', bg: 'Double every number in the list, one at a time.'};
 var $author$project$Sutra$Showcase$Data = F2(
 	function (entries, isSample) {
 		return {M: entries, an: isSample};
@@ -6620,6 +6620,18 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
 var $elm$html$Html$section = _VirtualDom_node('section');
+var $author$project$Sutra$Showcase$describe = function (model) {
+	switch (model) {
+		case 'base':
+			return 'NO TRAINING';
+		case 'raw':
+			return 'TRAINED ON UNCHECKED DATA';
+		case 'curated':
+			return 'TRAINED ON CHECKED DATA';
+		default:
+			return '';
+	}
+};
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -6736,7 +6748,7 @@ var $author$project$Sutra$Showcase$view = F4(
 										[
 											$elm$html$Html$text('Sample data')
 										])),
-									$elm$html$Html$text(' — illustrative programs, not model results. These two tasks will be replaced with the real showcase.')
+									$elm$html$Html$text(': illustrative programs, not model results. These two tasks are made up for the tests.')
 								])) : $elm$html$Html$text(''),
 							$elm$core$List$isEmpty(data.M) ? A2(
 							$elm$html$Html$p,
@@ -6761,7 +6773,7 @@ var $author$project$Sutra$Showcase$view = F4(
 										]),
 									_List_fromArray(
 										[
-											$elm$html$Html$text('CHOOSE AN EVAL TASK')
+											$elm$html$Html$text('PICK A TASK (NONE OF THESE WERE IN TRAINING)')
 										])),
 									A2(
 									$elm$html$Html$select,
@@ -6840,7 +6852,7 @@ var $author$project$Sutra$Showcase$view = F4(
 																				]),
 																			_List_fromArray(
 																				[
-																					$elm$html$Html$text('EXPRESSION')
+																					$elm$html$Html$text('INPUT')
 																				])),
 																			A2(
 																			$elm$html$Html$code,
@@ -6866,7 +6878,7 @@ var $author$project$Sutra$Showcase$view = F4(
 																				]),
 																			_List_fromArray(
 																				[
-																					$elm$html$Html$text('EXPECTED VALUE')
+																					$elm$html$Html$text('EXPECTED ANSWER')
 																				])),
 																			A2(
 																			$elm$html$Html$code,
@@ -6889,7 +6901,7 @@ var $author$project$Sutra$Showcase$view = F4(
 														]),
 													_List_fromArray(
 														[
-															$elm$html$Html$text('Compare the supplied answers, then inspect any program one reduction at a time. Reported verdicts come from the supplied data; playback evaluates only the expression above.')
+															$elm$html$Html$text('The same 1.5B model, trained three ways, tried this task. Press the button under any answer to run it step by step.')
 														])),
 													$elm$core$List$isEmpty(entry.af) ? A2(
 													$elm$html$Html$p,
@@ -6957,7 +6969,8 @@ var $author$project$Sutra$Showcase$view = F4(
 																				]),
 																			_List_fromArray(
 																				[
-																					$elm$html$Html$text('REPORTED VERDICT')
+																					$elm$html$Html$text(
+																					$author$project$Sutra$Showcase$describe(answer.ae))
 																				])),
 																			A2(
 																			$elm$html$Html$pre,
@@ -6997,7 +7010,7 @@ var $author$project$Sutra$Showcase$view = F4(
 																				]),
 																			_List_fromArray(
 																				[
-																					$elm$html$Html$text('Step through this answer'),
+																					$elm$html$Html$text('Run it step by step'),
 																					A2(
 																					$elm$html$Html$span,
 																					_List_fromArray(
@@ -7028,11 +7041,11 @@ var $author$project$Main$ChooseTask = function (a) {
 var $author$project$Sutra$Examples$all = _List_fromArray(
 	[
 		$author$project$Sutra$Examples$first,
-		{ab: 'filter', aj: 'Filter · keep even numbers', m: 'isEven x = x % 2 == 0', h: 'filter isEven [1, 2, 3, 4, 5, 6]', bg: 'Test each cell and keep the ones that match.'},
-		{ab: 'foldl', aj: 'Fold left · build a sum', m: 'add acc x = acc + x', h: 'foldl add 0 [1, 2, 3, 4]', bg: 'Carry an accumulator from the leftmost cell to the right.'},
-		{ab: 'foldr', aj: 'Fold right · rebuild a list', m: 'prepend x acc = x : acc', h: 'foldr prepend [] [1, 2, 3, 4]', bg: 'Unfold the list, then combine cells from right to left.'},
-		{ab: 'factorial', aj: 'Recursion · factorial', m: 'fact n =\u000A    if n <= 1 then 1\u000A    else n * fact (n - 1)', h: 'fact 5', bg: 'Follow a recursive definition down to its base case and back.'},
-		{ab: 'let', aj: 'Let · a local binding', m: '-- This expression needs no top-level definitions.', h: 'let doubled = 3 * 2 in doubled + 1', bg: 'Evaluate a local value, substitute it, and keep reducing.'}
+		{ab: 'filter', aj: 'Filter · keep even numbers', m: 'isEven x = x % 2 == 0', h: 'filter isEven [1, 2, 3, 4, 5, 6]', bg: 'Check each number and keep only the even ones.'},
+		{ab: 'foldl', aj: 'Fold left · build a sum', m: 'add acc x = acc + x', h: 'foldl add 0 [1, 2, 3, 4]', bg: 'Add the numbers from left to right, keeping a running total.'},
+		{ab: 'foldr', aj: 'Fold right · rebuild a list', m: 'prepend x acc = x : acc', h: 'foldr prepend [] [1, 2, 3, 4]', bg: 'Open up the whole list, then build it back from the right.'},
+		{ab: 'factorial', aj: 'Recursion · factorial', m: 'fact n =\u000A    if n <= 1 then 1\u000A    else n * fact (n - 1)', h: 'fact 5', bg: 'fact calls itself until it reaches 1, then multiplies on the way back.'},
+		{ab: 'let', aj: 'Let · a local binding', m: '-- This expression needs no top-level definitions.', h: 'let doubled = 3 * 2 in doubled + 1', bg: 'Work out the let value once, then use it.'}
 	]);
 var $elm$core$List$map = F2(
 	function (f, xs) {
@@ -7164,7 +7177,7 @@ var $author$project$Main$viewEditor = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('START WITH AN EXAMPLE')
+								$elm$html$Html$text('PICK AN EXAMPLE')
 							])),
 						A2(
 						$elm$html$Html$select,
@@ -7218,7 +7231,7 @@ var $author$project$Main$viewEditor = function (model) {
 								$elm$html$Html$text(
 								A2(
 									$elm$core$Maybe$withDefault,
-									'Your own definitions and expression. Step or Run to begin.',
+									'Your own program. Press Step or Run to start.',
 									A2(
 										$elm$core$Maybe$map,
 										function ($) {
@@ -7243,7 +7256,7 @@ var $author$project$Main$viewEditor = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('DEFINITIONS')
+										$elm$html$Html$text('PROGRAM')
 									])),
 								A2(
 								$elm$html$Html$span,
@@ -7312,7 +7325,7 @@ var $author$project$Main$viewEditor = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('EXPRESSION TO EVALUATE')
+								$elm$html$Html$text('WHAT TO RUN')
 							])),
 						A2(
 						$elm$html$Html$div,
@@ -7408,7 +7421,7 @@ var $author$project$Main$viewEditor = function (model) {
 								_List_Nil,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Numbers, lists, lambdas, local bindings, and recursion. Small pieces; interesting behavior.')
+										$elm$html$Html$text('Supports numbers, lists, lambdas, let, if and recursion.')
 									]))
 							]))
 					]))
@@ -7714,25 +7727,25 @@ var $elm$core$String$replace = F3(
 var $author$project$Main$ruleLabel = function (rule) {
 	switch (rule) {
 		case 'definition':
-			return 'Unfold definition';
+			return 'Use a definition';
 		case 'builtin_reference':
-			return 'Resolve built-in';
+			return 'Use a built-in';
 		case 'partial_application':
-			return 'Apply one argument';
+			return 'Pass one argument';
 		case 'beta':
-			return 'Substitute argument';
+			return 'Put the argument in';
 		case 'let':
-			return 'Substitute local value';
+			return 'Put the let value in';
 		case 'operator':
-			return 'Evaluate operator';
+			return 'Do the math';
 		case 'short_circuit':
-			return 'Short-circuit branch';
+			return 'Skip the other side';
 		case 'boolean_operator':
-			return 'Evaluate boolean';
+			return 'Work out true/false';
 		case 'if_true':
-			return 'Choose true branch';
+			return 'Take the then branch';
 		case 'if_false':
-			return 'Choose false branch';
+			return 'Take the else branch';
 		default:
 			return A3(
 				$elm$core$String$replace,
@@ -8070,7 +8083,7 @@ var $author$project$Main$viewCurrent = F2(
 						]),
 					_List_fromArray(
 						[
-							$elm$html$Html$text('CURRENT EXPRESSION')
+							$elm$html$Html$text('NOW')
 						])),
 					A2(
 					$elm$html$Html$div,
@@ -8095,7 +8108,7 @@ var $author$project$Main$viewCurrent = F2(
 										]),
 									_List_fromArray(
 										[
-											$elm$html$Html$text('Your next reduction starts here.')
+											$elm$html$Html$text('The next step starts from here.')
 										]));
 							}
 						}()
@@ -8122,7 +8135,7 @@ var $author$project$Main$viewCurrent = F2(
 										]),
 									_List_fromArray(
 										[
-											$elm$html$Html$text('BEFORE THIS STEP')
+											$elm$html$Html$text('ONE STEP BEFORE')
 										])),
 									A2(
 									$elm$html$Html$code,
@@ -8166,7 +8179,7 @@ var $author$project$Main$viewActivity = function (activity) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('LIST ACTIVITY')
+								$elm$html$Html$text('THE LIST')
 							])),
 						A2(
 						$elm$core$Maybe$withDefault,
@@ -8178,7 +8191,7 @@ var $author$project$Main$viewActivity = function (activity) {
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text('waiting for a list')
+									$elm$html$Html$text('no list yet')
 								])),
 						A2(
 							$elm$core$Maybe$map,
@@ -8226,7 +8239,7 @@ var $author$project$Main$viewActivity = function (activity) {
 								_List_Nil,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Map, filter, and fold make their next move here.')
+										$elm$html$Html$text('When map, filter or fold runs, you can follow the list here.')
 									]))
 							]));
 				} else {
@@ -8739,7 +8752,7 @@ var $author$project$Main$viewExecution = function (model) {
 													'0',
 													$elm$core$String$fromInt(count)))
 											])),
-										$elm$html$Html$text(' reductions')
+										$elm$html$Html$text(' steps')
 									])),
 								A2(
 								$elm$html$Html$span,
@@ -8753,7 +8766,7 @@ var $author$project$Main$viewExecution = function (model) {
 										$elm$html$Html$text(
 										A2(
 											$elm$core$Maybe$withDefault,
-											'Initial expression',
+											'Start',
 											A2(
 												$elm$core$Maybe$map,
 												$author$project$Main$ruleLabel,
@@ -8775,7 +8788,7 @@ var $author$project$Main$viewExecution = function (model) {
 						_List_fromArray(
 							[
 								A2($elm$html$Html$span, _List_Nil, _List_Nil),
-								$elm$html$Html$text('Highlighted: the term rewritten in the last step')
+								$elm$html$Html$text('Yellow = the part that changed in the last step')
 							])),
 						$author$project$Main$viewActivity(
 						A2(
@@ -8822,7 +8835,7 @@ var $author$project$Main$viewExecution = function (model) {
 													]),
 												_List_fromArray(
 													[
-														$elm$html$Html$text('FINAL VALUE')
+														$elm$html$Html$text('ANSWER')
 													]))
 											])),
 										A2(
@@ -8888,7 +8901,7 @@ var $author$project$Main$viewExecution = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text(
-										_Utils_eq(model.f, $elm$core$Maybe$Nothing) ? 'Your edits are ready. Step or Run to evaluate them.' : 'Step changes one term. Back returns to the exact previous state.')
+										_Utils_eq(model.f, $elm$core$Maybe$Nothing) ? 'Press Step or Run to see your changes.' : 'Each step changes one small part. Back takes you to the previous step.')
 									]));
 						}
 					}()
@@ -8925,7 +8938,7 @@ var $author$project$Main$viewAnswerContext = function (model) {
 							_List_fromArray(
 								[
 									$elm$html$Html$text(
-									'INSPECTING ' + $elm$core$String$toUpper(context.ae))
+									$elm$core$String$toUpper(context.ae) + ' MODEL\u0027S ANSWER')
 								])),
 							A2(
 							$elm$html$Html$h2,
@@ -8939,7 +8952,7 @@ var $author$project$Main$viewAnswerContext = function (model) {
 							_List_Nil,
 							_List_fromArray(
 								[
-									$elm$html$Html$text('Reported verdict: '),
+									$elm$html$Html$text('Result: '),
 									A2(
 									$elm$html$Html$span,
 									_List_fromArray(
@@ -8951,7 +8964,7 @@ var $author$project$Main$viewAnswerContext = function (model) {
 											$elm$html$Html$text(
 											$author$project$Sutra$Showcase$verdictLabel(context._))
 										])),
-									$elm$html$Html$text(' · Expected example value: '),
+									$elm$html$Html$text(' · Expected answer: '),
 									A2(
 									$elm$html$Html$code,
 									_List_Nil,
@@ -9038,7 +9051,7 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('A language, made visible.')
+										$elm$html$Html$text('A tiny language you can watch run')
 									]))
 							])),
 						A2(
@@ -9056,7 +9069,7 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$Attributes$class('status-dot')
 									]),
 								_List_Nil),
-								$elm$html$Html$text('Runs entirely in your browser')
+								$elm$html$Html$text('Works offline in your browser')
 							]))
 					])),
 				A2(
@@ -9080,21 +9093,21 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('THE SMALL-STEP PLAYGROUND')
+										$elm$html$Html$text('STEP-BY-STEP PLAYGROUND')
 									])),
 								A2(
 								$elm$html$Html$h1,
 								_List_Nil,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('See how a program'),
+										$elm$html$Html$text('Watch a program'),
 										A2($elm$html$Html$br, _List_Nil, _List_Nil),
 										A2(
 										$elm$html$Html$span,
 										_List_Nil,
 										_List_fromArray(
 											[
-												$elm$html$Html$text('becomes a value.')
+												$elm$html$Html$text('turn into an answer.')
 											]))
 									])),
 								A2(
@@ -9105,7 +9118,7 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('A tiny functional language. Every rewrite in the open. Pick an example, follow a function, and watch the cells move.')
+										$elm$html$Html$text('Pick an example and press Step. Every press makes one small change, so you can see exactly how the answer is worked out.')
 									])),
 								A2(
 								$elm$html$Html$div,
@@ -9240,7 +9253,7 @@ var $author$project$Main$view = function (model) {
 									[
 										$elm$html$Html$text('/')
 									])),
-								$elm$html$Html$text('Pure functions. Visible computation.')
+								$elm$html$Html$text('One small step at a time.')
 							])),
 						A2(
 						$elm$html$Html$span,

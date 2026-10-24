@@ -89,6 +89,15 @@ verdictLabel verdict =
         _ -> verdict
 
 
+describe : String -> String
+describe model =
+    case model of
+        "base" -> "NO TRAINING"
+        "raw" -> "TRAINED ON UNCHECKED DATA"
+        "curated" -> "TRAINED ON CHECKED DATA"
+        _ -> ""
+
+
 view : (String -> msg) -> (Int -> Int -> msg) -> Int -> Data -> Html msg
 view choose inspect selected data =
     section [ A.class "panel showcase-panel", A.attribute "aria-label" "Model answers" ]
@@ -99,13 +108,13 @@ view choose inspect selected data =
         , div [ A.class "showcase-body" ]
             [ if data.isSample then
                 p [ A.class "sample-notice", A.attribute "data-testid" "sample-notice" ]
-                    [ span [] [ text "Sample data" ], text " — illustrative programs, not model results. These two tasks will be replaced with the real showcase." ]
+                    [ span [] [ text "Sample data" ], text ": illustrative programs, not model results. These two tasks are made up for the tests." ]
               else text ""
             , if List.isEmpty data.entries then
                 p [ A.class "showcase-empty" ] [ text "No model answers yet. Add tasks to assets/showcase.json and rebuild the showcase." ]
               else
                 div []
-                    [ label [ A.for "showcase-task", A.class "field-label" ] [ text "CHOOSE AN EVAL TASK" ]
+                    [ label [ A.for "showcase-task", A.class "field-label" ] [ text "PICK A TASK (NONE OF THESE WERE IN TRAINING)" ]
                     , select [ A.id "showcase-task", A.class "example-picker", A.attribute "aria-label" "Showcase task", A.value (String.fromInt selected), onInput choose ]
                         (List.indexedMap (\index entry -> option [ A.value (String.fromInt index), A.selected (index == selected) ] [ text entry.task ]) data.entries)
                     , case entryAt selected data of
@@ -115,11 +124,11 @@ view choose inspect selected data =
                                 [ div [ A.class "task-detail" ]
                                     [ h3 [] [ text entry.task ]
                                     , div [ A.class "task-examples" ]
-                                        [ div [] [ span [ A.class "field-label" ] [ text "EXPRESSION" ], code [ A.attribute "data-testid" "showcase-expression" ] [ text entry.expr ] ]
-                                        , div [] [ span [ A.class "field-label" ] [ text "EXPECTED VALUE" ], code [ A.attribute "data-testid" "showcase-expected" ] [ text entry.expect ] ]
+                                        [ div [] [ span [ A.class "field-label" ] [ text "INPUT" ], code [ A.attribute "data-testid" "showcase-expression" ] [ text entry.expr ] ]
+                                        , div [] [ span [ A.class "field-label" ] [ text "EXPECTED ANSWER" ], code [ A.attribute "data-testid" "showcase-expected" ] [ text entry.expect ] ]
                                         ]
                                     ]
-                                , p [ A.class "showcase-copy" ] [ text "Compare the supplied answers, then inspect any program one reduction at a time. Reported verdicts come from the supplied data; playback evaluates only the expression above." ]
+                                , p [ A.class "showcase-copy" ] [ text "The same 1.5B model, trained three ways, tried this task. Press the button under any answer to run it step by step." ]
                                 , if List.isEmpty entry.answers then
                                     p [ A.class "showcase-empty" ] [ text "This task has no model answers yet." ]
                                   else
@@ -131,10 +140,10 @@ view choose inspect selected data =
                                                         [ h3 [] [ text answer.model ]
                                                         , span [ A.class ("verdict-badge verdict-" ++ answer.verdict), A.attribute "data-verdict" answer.verdict, A.title "Reported verdict" ] [ text (verdictLabel answer.verdict) ]
                                                         ]
-                                                    , p [ A.class "field-label verdict-caption" ] [ text "REPORTED VERDICT" ]
+                                                    , p [ A.class "field-label verdict-caption" ] [ text (describe answer.model) ]
                                                     , pre [ A.class "model-source" ] [ code [] [ text answer.program ] ]
                                                     , if String.isEmpty answer.program then p [ A.class "empty-program" ] [ text "Empty program" ] else text ""
-                                                    , button [ A.type_ "button", A.class "control-button button-primary inspect-answer", A.attribute "aria-label" ("Inspect " ++ answer.model), onClick (inspect selected index) ] [ text "Step through this answer", span [ A.attribute "aria-hidden" "true" ] [ text "→" ] ]
+                                                    , button [ A.type_ "button", A.class "control-button button-primary inspect-answer", A.attribute "aria-label" ("Inspect " ++ answer.model), onClick (inspect selected index) ] [ text "Run it step by step", span [ A.attribute "aria-hidden" "true" ] [ text "→" ] ]
                                                     ]
                                             )
                                             entry.answers
