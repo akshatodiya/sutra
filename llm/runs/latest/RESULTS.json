@@ -1,0 +1,165 @@
+{
+  "status": "validated",
+  "date": "2026-10-28",
+  "kernel": "akshatodiya/sutra",
+  "pipeline_seconds": 3217,
+  "eval_tasks": 39,
+  "samples_per_task": 20,
+  "sft_rows_per_set": 298,
+  "training_tasks_with_data": 67,
+  "results": {
+    "Qwen2.5-Coder-1.5B-Instruct": {
+      "correct": 58,
+      "total": 780,
+      "pass_rate": 0.07435897435897436,
+      "errors": {
+        "parse_error": 427,
+        "unbound": 203,
+        "runtime_error": 7,
+        "pass": 58,
+        "wrong_answer": 76,
+        "type_error": 9
+      }
+    },
+    "raw": {
+      "correct": 356,
+      "total": 780,
+      "pass_rate": 0.4564102564102564,
+      "errors": {
+        "unbound": 129,
+        "parse_error": 126,
+        "type_error": 53,
+        "pass": 356,
+        "wrong_answer": 100,
+        "runtime_error": 16
+      }
+    },
+    "curated": {
+      "correct": 533,
+      "total": 780,
+      "pass_rate": 0.6833333333333333,
+      "errors": {
+        "unbound": 36,
+        "pass": 533,
+        "parse_error": 51,
+        "wrong_answer": 117,
+        "type_error": 31,
+        "runtime_error": 12
+      }
+    },
+    "teacher_gen": {
+      "train_samples": 1632,
+      "train_correct": 1161,
+      "eval_samples": 160,
+      "eval_correct": 88,
+      "train_tasks": 68,
+      "train_tasks_solved": 65
+    },
+    "teacher_repair": {
+      "train_samples": 471,
+      "train_correct": 176,
+      "eval_samples": 0,
+      "eval_correct": 0,
+      "train_tasks": 50,
+      "train_tasks_solved": 30
+    }
+  },
+  "comparisons": {
+    "raw_minus_Qwen2.5-Coder-1.5B-Instruct": {
+      "difference": 0.382051282051282,
+      "task_bootstrap_95_ci": [
+        0.28205128205128205,
+        0.48205128205128206
+      ]
+    },
+    "curated_minus_Qwen2.5-Coder-1.5B-Instruct": {
+      "difference": 0.608974358974359,
+      "task_bootstrap_95_ci": [
+        0.5153846153846154,
+        0.6987179487179487
+      ]
+    },
+    "curated_minus_raw": {
+      "difference": 0.22692307692307695,
+      "task_bootstrap_95_ci": [
+        0.1564102564102564,
+        0.30128205128205127
+      ]
+    }
+  },
+  "curated_vs_raw_tasks": {
+    "curated_better": 30,
+    "raw_better": 3,
+    "ties": 6
+  },
+  "bootstrap": {
+    "unit": "task",
+    "resamples": 10000,
+    "seed": 16
+  },
+  "adapters": {
+    "raw": {
+      "sha256": "7f35dd33c9bd199e87c58bb2300406f10dc1d29eb189971077c0eb7c5c61c322",
+      "bytes": 17462432,
+      "tensors": 224
+    },
+    "curated": {
+      "sha256": "90c33e9499e3a10eb9bfe8fa9c4ba6afae842b45d3501da0c63f23283abf7659",
+      "bytes": 17462432,
+      "tensors": 224
+    }
+  },
+  "checks": {
+    "source_hashes": true,
+    "launched_job_hash": true,
+    "generation_complete": true,
+    "all_2340_student_verdicts_rechecked_identically": true,
+    "matched_sft_prompts_and_counts": true,
+    "train_eval_family_disjoint": true,
+    "all_curated_training_programs_pass": true,
+    "assistant_only_loss_and_training_args": true,
+    "adapter_files_complete": true,
+    "best_of_10_recomputed_locally": true
+  },
+  "limitations": [
+    "Post-submission portfolio run, no change to published submission.",
+    "Single training seed and 39 held-out tasks.",
+    "Prompt clarification, answer-only loss and regenerated teacher data changed together; no single-cause attribution."
+  ],
+  "best_of_10": {
+    "method": "Visible-example filter, output agreement on 8 generated probe inputs, steps break ties. 400 draws from 20 saved answers per task.",
+    "models": {
+      "Qwen2.5-Coder-1.5B-Instruct": {
+        "best_of_10_rate": 0.3453205128205128,
+        "any_correct_ceiling": 0.3656226285423714,
+        "gain_95_ci": [
+          0.17352564102564103,
+          0.3755128205128205
+        ]
+      },
+      "curated": {
+        "best_of_10_rate": 0.89,
+        "any_correct_ceiling": 0.9219348762692416,
+        "gain_95_ci": [
+          0.14064102564102565,
+          0.2769871794871795
+        ]
+      },
+      "raw": {
+        "best_of_10_rate": 0.7494871794871795,
+        "any_correct_ceiling": 0.8072480627255574,
+        "gain_95_ci": [
+          0.20852564102564103,
+          0.37711538461538463
+        ]
+      }
+    },
+    "curated_minus_raw": {
+      "difference": 0.1405128205128205,
+      "task_bootstrap_95_ci": [
+        0.06442307692307692,
+        0.23057692307692307
+      ]
+    }
+  }
+}

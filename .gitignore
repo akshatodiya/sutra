@@ -11,7 +11,13 @@ llm/work/
 kaggle.json
 llm/kaggle/jobs/
 fp/.elm-cache/
-# trained LoRA adapters: only the two files needed to load them (tokenizer = the base model's)
-llm/runs/*/adapters/*/*
-!llm/runs/*/adapters/*/adapter_config.json
-!llm/runs/*/adapters/*/adapter_model.safetensors
+# trained LoRA adapters and compact provenance (tokenizer = the base model's)
+llm/runs/latest/train_eval/adapters/*/*
+!llm/runs/latest/train_eval/adapters/*/adapter_config.json
+!llm/runs/latest/train_eval/adapters/*/adapter_model.safetensors
+!llm/runs/latest/train_eval/adapters/*/lexsi_provenance.json
+!llm/runs/latest/train_eval/adapters/*/trainer_state.json
+!llm/runs/latest/train_eval/adapters/*/chat_template.jinja
+
+# local handoff
+/CODEX.md

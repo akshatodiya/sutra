@@ -1,0 +1,170 @@
+{
+ "job": {
+  "sglang": "sglang==0.5.4.post3 torch==2.8.0 transformers==4.57.1 sgl-kernel==0.3.16.post4 flashinfer-python==0.5.0 datasets==4.8.5 pyarrow==26.0.0",
+  "train_pip": "--no-deps aligntune==0.1.28 curatorkit==0.1.22 && pip install -q --extra-index-url https://download.pytorch.org/whl/cu128 torch==2.11.0+cu128 transformers==5.16.1 accelerate==1.14.0 datasets==4.8.5 trl==1.7.1 peft==0.20.0 torchao==0.18.0 sqlglot pypdf python-docx tensorboard",
+  "ctx": 4096,
+  "concurrency": 128,
+  "server_flags": [
+   "--attention-backend",
+   "triton",
+   "--sampling-backend",
+   "pytorch",
+   "--disable-cuda-graph",
+   "--disable-custom-all-reduce",
+   "--max-running-requests",
+   "128"
+  ],
+  "models": [
+   "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+  ],
+  "tp": 1,
+  "mem": 0.75,
+  "sampling": {
+   "top_p": 1.0,
+   "top_k": -1,
+   "repetition_penalty": 1.0
+  },
+  "server_seeds": {
+   "Qwen2.5-Coder-1.5B-Instruct": 469132208,
+   "raw": 500784887,
+   "curated": 476297148
+  }
+ },
+ "n_requests": 39,
+ "models": {
+  "Qwen2.5-Coder-1.5B-Instruct": {
+   "path": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "command": [
+    "/kaggle/tmp/sgl/bin/python",
+    "-m",
+    "sglang.launch_server",
+    "--model-path",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "--tokenizer-path",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "--dtype",
+    "half",
+    "--port",
+    "30000",
+    "--tp",
+    "1",
+    "--mem-fraction-static",
+    "0.75",
+    "--context-length",
+    "4096",
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128",
+    "--random-seed",
+    "469132208"
+   ],
+   "up_seconds": 36,
+   "gen_seconds": 65
+  },
+  "raw": {
+   "path": "/kaggle/tmp/merged/raw",
+   "command": [
+    "/kaggle/tmp/sgl/bin/python",
+    "-m",
+    "sglang.launch_server",
+    "--model-path",
+    "/kaggle/tmp/merged/raw",
+    "--tokenizer-path",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "--dtype",
+    "half",
+    "--port",
+    "30000",
+    "--tp",
+    "1",
+    "--mem-fraction-static",
+    "0.75",
+    "--context-length",
+    "4096",
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128",
+    "--random-seed",
+    "500784887"
+   ],
+   "up_seconds": 41,
+   "gen_seconds": 62
+  },
+  "curated": {
+   "path": "/kaggle/tmp/merged/curated",
+   "command": [
+    "/kaggle/tmp/sgl/bin/python",
+    "-m",
+    "sglang.launch_server",
+    "--model-path",
+    "/kaggle/tmp/merged/curated",
+    "--tokenizer-path",
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "--dtype",
+    "half",
+    "--port",
+    "30000",
+    "--tp",
+    "1",
+    "--mem-fraction-static",
+    "0.75",
+    "--context-length",
+    "4096",
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128",
+    "--random-seed",
+    "476297148"
+   ],
+   "up_seconds": 41,
+   "gen_seconds": 56
+  }
+ },
+ "hparams": {
+  "precision": "fp32",
+  "num_epochs": 3,
+  "max_steps": -1,
+  "batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0002,
+  "max_seq_length": 1024,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "seed": 16,
+  "assistant_only_loss": true
+ },
+ "train_pip_rc": 0,
+ "train_versions": "accelerate                            1.14.0\naligntune                             0.1.28\ncuratorkit                            0.1.22\ndatasets                              4.8.5\npeft                                  0.20.0\ntorch                                 2.11.0+cu128\ntorchao                               0.18.0\ntransformers                          5.16.1\ntrl                                   1.7.1\n",
+ "train": {
+  "raw": {
+   "rc": 0,
+   "rows": 298,
+   "seconds": 900
+  },
+  "curated": {
+   "rc": 0,
+   "rows": 298,
+   "seconds": 848
+  }
+ },
+ "sglang_pip_rc": 0,
+ "sglang_versions": "flashinfer-python         0.5.0\nsgl-kernel                0.3.16.post4\nsglang                    0.5.4.post3\ntorch                     2.8.0\ntransformers              4.57.1\n",
+ "sglang_import_check_rc": 0,
+ "total_seconds": 2086
+}
