@@ -1,6 +1,6 @@
 """Write fp/assets/showcase.json: for every eval task, the first sampled answer of each model and its verdict.
 
-usage: python showcase.py runs/train_eval   (needs verified_<model>.jsonl from verify.py)
+usage: python showcase.py runs/latest/train_eval   (needs verified_<model>.jsonl from verify.py)
 """
 import json
 import sys

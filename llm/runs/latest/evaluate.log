@@ -1,0 +1,30 @@
+Qwen2.5-Coder-1.5B-Instruct: run 39928f9cb767bf78 (fingerprint 39928f9cb767bf78)
+  sutra_pass: 0.0744 ± 0.0094  (n=780)
+  model: precomputed (not a local model -- no measurable size)
+curated: run d38e3bc945f6de15 (fingerprint d38e3bc945f6de15)
+  sutra_pass: 0.6833 ± 0.0167  (n=780)
+  model: precomputed (not a local model -- no measurable size)
+raw: run 67a6e96365703a7c (fingerprint 67a6e96365703a7c)
+  sutra_pass: 0.4564 ± 0.0178  (n=780)
+  model: precomputed (not a local model -- no measurable size)
+
+raw vs Qwen2.5-Coder-1.5B-Instruct: task-clustered 95% CI of the difference [+0.282, +0.482]
+Comparison: 39928f9cb767bf78 (baseline) -> 67a6e96365703a7c (candidate)
+  per-metric (baseline -> candidate | absolute delta | relative %):
+    sutra_pass: 0.0744 -> 0.4564  delta=+0.3821 (+513.8% rel)  (n=780->780, std=0.2624->0.4981)
+  samples: 23 went correct->wrong, 321 went wrong->correct
+  model: precomputed -> precomputed (no measurable size)
+
+curated vs Qwen2.5-Coder-1.5B-Instruct: task-clustered 95% CI of the difference [+0.515, +0.699]
+Comparison: 39928f9cb767bf78 (baseline) -> d38e3bc945f6de15 (candidate)
+  per-metric (baseline -> candidate | absolute delta | relative %):
+    sutra_pass: 0.0744 -> 0.6833  delta=+0.6090 (+819.0% rel)  (n=780->780, std=0.2624->0.4652)
+  samples: 8 went correct->wrong, 483 went wrong->correct
+  model: precomputed -> precomputed (no measurable size)
+
+curated vs raw: task-clustered 95% CI of the difference [+0.156, +0.301]
+Comparison: 67a6e96365703a7c (baseline) -> d38e3bc945f6de15 (candidate)
+  per-metric (baseline -> candidate | absolute delta | relative %):
+    sutra_pass: 0.4564 -> 0.6833  delta=+0.2269 (+49.7% rel)  (n=780->780, std=0.4981->0.4652)
+  samples: 49 went correct->wrong, 226 went wrong->correct
+  model: precomputed -> precomputed (no measurable size)

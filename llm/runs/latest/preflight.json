@@ -1,0 +1,87 @@
+{
+  "status": "ready_for_gpu_approval",
+  "date": "2026-10-28",
+  "kernel_slug": "sutra",
+  "title": "Sutra",
+  "private": true,
+  "accelerator": "NvidiaTeslaT4 (two T4 GPUs)",
+  "max_seconds": 5400,
+  "job_sha256": "b5df0cd84dd33f0fb02253c820f42f264143f4b4bd3b92f6832b1aae4ec77b86",
+  "metadata_sha256": "81d6b30f070a385646d21dfc932d77c8c60234e692ec90b23bb4c4ec8f5b0a27",
+  "source_sha256": {
+    "llm/prompts.py": "e0ab69ad86900ec10fca567687ffeff3951d5120e7e9934596c512c457f8f888",
+    "llm/tasks.py": "3882f8f076bcb685c5ee6101434c4ddddcd5db81ce23d1bbce22c69ba764f6f3",
+    "llm/verify.py": "f52eed565b6013bc298da74e8eaa2e3462157e8207aa653a4d5203b5c033c879",
+    "llm/curate.py": "6bff538295b5bad95e1f4408ade4f3ea65802960ce3335adc292bfa29b048d9e",
+    "llm/evaluate.py": "b1456a532a060a6108c96022d4d058080c760674f3b1532c1b6da1fe3faef100",
+    "llm/best_of_k.py": "b57b4410fde5fbfaa20bbd097247bb7fb702b8f550b3f9edae56b15495a03296",
+    "llm/data/tasks_train.jsonl": "2034609b34a81bbc402ef23d9c6cc55cb5a53bcf4c86f58f3c27553e5ed70b9a",
+    "llm/data/tasks_eval.jsonl": "cf280efab515c3006b3aa743817858c05247d15c3e9680a90b6abf2550db87fb",
+    "fp/dist/sutra.js": "cdabea090706ecba01214fbd27569eaf5fa62d952b04cc33539932d4e4ca9a8d",
+    "llm/kaggle/job.py.tmpl": "8e20ddbe26416d465b0373de0214331b3a73b33280d8eac3993e4843cba6f90f"
+  },
+  "checks": {
+    "status": "passed",
+    "request_plan_and_settings_unchanged": true,
+    "source_hashes_passed": true,
+    "only_latest_artifact_folder": true,
+    "matched_raw_curated": true,
+    "family_disjoint": true,
+    "current_pipeline_smoke_passed": true,
+    "real_interpreter_curatorkit_auditkit_best_of_k": true,
+    "simulated_model_calls_only": true,
+    "local_model_training": false,
+    "generated_job_sha256": "b5df0cd84dd33f0fb02253c820f42f264143f4b4bd3b92f6832b1aae4ec77b86"
+  },
+  "environment_check": {
+    "status": "passed",
+    "datasets": "4.8.5",
+    "pyarrow": "26.0.0",
+    "checks": [
+      "import",
+      "dataset construction/roundtrip",
+      "array-extension roundtrip"
+    ],
+    "gpu_used": false,
+    "model_loaded": false,
+    "failure_reproduced": {
+      "reproduced": true,
+      "error": "module 'pyarrow' has no attribute 'PyExtensionType'"
+    },
+    "linux_dependency_resolution": {
+      "status": "passed",
+      "python": "3.12",
+      "platform": "x86_64-linux",
+      "resolved_packages": 167
+    },
+    "source": "https://arrow.apache.org/release/21.0.0.html"
+  },
+  "requests": {
+    "teacher_requests": 88,
+    "teacher_samples": 1792,
+    "student_eval_requests": 39,
+    "samples_per_eval_task": 20
+  },
+  "hparams": {
+    "precision": "fp32",
+    "num_epochs": 3,
+    "max_steps": -1,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0002,
+    "max_seq_length": 1024,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "seed": 16,
+    "assistant_only_loss": true
+  },
+  "new_gpu_run_launched": false,
+  "local_model_training": false,
+  "notes": [
+    "The current working model/results remain until a successful checked replacement exists.",
+    "Only one latest artifact folder and one generated current job are retained.",
+    "Linux dependency resolution and macOS Python 3.12 datasets/Arrow regression checks passed. Full SGLang GPU execution remains pending.",
+    "The actual SGLang helper import check runs in the cloud before any model server startup."
+  ]
+}

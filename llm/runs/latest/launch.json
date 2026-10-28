@@ -1,0 +1,15 @@
+{
+  "kernel_slug": "sutra",
+  "title": "Sutra",
+  "url": "https://www.kaggle.com/code/akshatodiya/sutra",
+  "approved_by_user": true,
+  "submitted_utc": "2026-10-28T03:41:20Z",
+  "last_status": "COMPLETE",
+  "accelerator": "NvidiaTeslaT4 (two T4 GPUs)",
+  "timeout_seconds": 5400,
+  "job_sha256": "b5df0cd84dd33f0fb02253c820f42f264143f4b4bd3b92f6832b1aae4ec77b86",
+  "client_connection_required": false,
+  "note": "Completed cloud pipeline. All 2,340 student verdicts, curated SFT programs, source hashes and best-of-ten results independently rechecked locally. Only the latest artifacts retained.",
+  "validated_utc": "2026-10-28T05:02:56.377287+00:00",
+  "pipeline_seconds": 3217
+}

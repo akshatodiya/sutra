@@ -1,0 +1,4 @@
+Qwen2.5-Coder-1.5B-Instruct: pass@1 7.4% -> best-of-10 34.5% (gain 95% CI [+17.4, +37.6]); any of 10 correct 36.6%
+curated: pass@1 68.3% -> best-of-10 89.0% (gain 95% CI [+14.1, +27.7]); any of 10 correct 92.2%
+raw: pass@1 45.6% -> best-of-10 74.9% (gain 95% CI [+20.9, +37.7]); any of 10 correct 80.7%
+best-of-10, curated vs raw: +14.1 pts, 95% CI [+6.4, +23.1]

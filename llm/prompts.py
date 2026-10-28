@@ -6,6 +6,7 @@ CHEATSHEET = """Sutra is a tiny pure functional language (Haskell-like, call-by-
 - Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.
 - Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,
   `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.
+- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.
 - Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.
 - There is no pattern matching, no where, no type signatures, no guards.
 
