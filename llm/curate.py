@@ -7,7 +7,7 @@ raw:     the original teacher samples with no verification, sampled to the same 
 Both sets use the same prompt and the same answer format (the extracted program in a ```sutra block),
 so the only difference between them is curation.
 
-usage: python curate.py runs/teacher_gen/verified.jsonl runs/teacher_repair/verified.jsonl data/sft
+usage: python curate.py runs/latest/teacher_gen/verified.jsonl runs/latest/teacher_repair/verified.jsonl runs/latest/sft
 """
 import json
 import random

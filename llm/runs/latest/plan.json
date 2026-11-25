@@ -1,0 +1,2157 @@
+{
+ "hashes": {
+  "llm/prompts.py": "e0ab69ad86900ec10fca567687ffeff3951d5120e7e9934596c512c457f8f888",
+  "llm/tasks.py": "3882f8f076bcb685c5ee6101434c4ddddcd5db81ce23d1bbce22c69ba764f6f3",
+  "llm/verify.py": "f52eed565b6013bc298da74e8eaa2e3462157e8207aa653a4d5203b5c033c879",
+  "llm/curate.py": "6bff538295b5bad95e1f4408ade4f3ea65802960ce3335adc292bfa29b048d9e",
+  "llm/evaluate.py": "b1456a532a060a6108c96022d4d058080c760674f3b1532c1b6da1fe3faef100",
+  "llm/best_of_k.py": "b57b4410fde5fbfaa20bbd097247bb7fb702b8f550b3f9edae56b15495a03296",
+  "llm/data/tasks_train.jsonl": "2034609b34a81bbc402ef23d9c6cc55cb5a53bcf4c86f58f3c27553e5ed70b9a",
+  "llm/data/tasks_eval.jsonl": "cf280efab515c3006b3aa743817858c05247d15c3e9680a90b6abf2550db87fb",
+  "fp/dist/sutra.js": "cdabea090706ecba01214fbd27569eaf5fa62d952b04cc33539932d4e4ca9a8d",
+  "llm/kaggle/job.py.tmpl": "8e20ddbe26416d465b0373de0214331b3a73b33280d8eac3993e4843cba6f90f"
+ },
+ "jobs": {
+  "teacher_gen": {
+   "sglang": "sglang==0.5.4.post3 torch==2.8.0 transformers==4.57.1 sgl-kernel==0.3.16.post4 flashinfer-python==0.5.0 datasets==4.8.5 pyarrow==26.0.0",
+   "train_pip": "--no-deps aligntune==0.1.28 curatorkit==0.1.22 && pip install -q --extra-index-url https://download.pytorch.org/whl/cu128 torch==2.11.0+cu128 transformers==5.16.1 accelerate==1.14.0 datasets==4.8.5 trl==1.7.1 peft==0.20.0 torchao==0.18.0 sqlglot pypdf python-docx tensorboard",
+   "ctx": 4096,
+   "concurrency": 128,
+   "server_flags": [
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-Coder-7B-Instruct"
+   ],
+   "tp": 2,
+   "mem": 0.75,
+   "sampling": {
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.1
+   },
+   "server_seeds": {
+    "Qwen2.5-Coder-7B-Instruct": 890407709
+   }
+  },
+  "teacher_repair": {
+   "sglang": "sglang==0.5.4.post3 torch==2.8.0 transformers==4.57.1 sgl-kernel==0.3.16.post4 flashinfer-python==0.5.0 datasets==4.8.5 pyarrow==26.0.0",
+   "train_pip": "--no-deps aligntune==0.1.28 curatorkit==0.1.22 && pip install -q --extra-index-url https://download.pytorch.org/whl/cu128 torch==2.11.0+cu128 transformers==5.16.1 accelerate==1.14.0 datasets==4.8.5 trl==1.7.1 peft==0.20.0 torchao==0.18.0 sqlglot pypdf python-docx tensorboard",
+   "ctx": 4096,
+   "concurrency": 128,
+   "server_flags": [
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-Coder-7B-Instruct"
+   ],
+   "tp": 2,
+   "mem": 0.75,
+   "sampling": {
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.1
+   },
+   "server_seeds": {
+    "Qwen2.5-Coder-7B-Instruct": 851035473
+   }
+  },
+  "train_eval": {
+   "sglang": "sglang==0.5.4.post3 torch==2.8.0 transformers==4.57.1 sgl-kernel==0.3.16.post4 flashinfer-python==0.5.0 datasets==4.8.5 pyarrow==26.0.0",
+   "train_pip": "--no-deps aligntune==0.1.28 curatorkit==0.1.22 && pip install -q --extra-index-url https://download.pytorch.org/whl/cu128 torch==2.11.0+cu128 transformers==5.16.1 accelerate==1.14.0 datasets==4.8.5 trl==1.7.1 peft==0.20.0 torchao==0.18.0 sqlglot pypdf python-docx tensorboard",
+   "ctx": 4096,
+   "concurrency": 128,
+   "server_flags": [
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--disable-custom-all-reduce",
+    "--max-running-requests",
+    "128"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+   ],
+   "tp": 1,
+   "mem": 0.75,
+   "sampling": {
+    "top_p": 1.0,
+    "top_k": -1,
+    "repetition_penalty": 1.0
+   },
+   "server_seeds": {
+    "Qwen2.5-Coder-1.5B-Instruct": 469132208,
+    "raw": 500784887,
+    "curated": 476297148
+   }
+  }
+ },
+ "teacher_requests": [
+  {
+   "id": "train:scale_0",
+   "meta": {
+    "task_id": "scale_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of the list xs by 2.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [14, -7] == [28, -14]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:scale_1",
+   "meta": {
+    "task_id": "scale_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of the list xs by 3.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [3, 7, -4, 15, -4] == [9, 21, -12, 45, -12]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:scale_2",
+   "meta": {
+    "task_id": "scale_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of the list xs by 5.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-4, -5, -1, 20, 20, -7, 2, -2] == [-20, -25, -5, 100, 100, -35, 10, -10]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:scale_3",
+   "meta": {
+    "task_id": "scale_3",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of the list xs by -1.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-6, 8, -8, 12, 6, -4, 2, 13] == [6, -8, 8, -12, -6, 4, -2, -13]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:scale_4",
+   "meta": {
+    "task_id": "scale_4",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of the list xs by 10.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-4, -8] == [-40, -80]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:shift_0",
+   "meta": {
+    "task_id": "shift_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Add 1 to every element of the list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [8, -5, 12, 15, 12, 5, 11, 15] == [9, -4, 13, 16, 13, 6, 12, 16]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:shift_1",
+   "meta": {
+    "task_id": "shift_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Add 4 to every element of the list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [12, 8, 3, 14, -7, -4, 7, 6] == [16, 12, 7, 18, -3, 0, 11, 10]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:shift_2",
+   "meta": {
+    "task_id": "shift_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Add -2 to every element of the list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [1, 11, 0, -6, -3, 14, 16, -2] == [-1, 9, -2, -8, -5, 12, 14, -4]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:shift_3",
+   "meta": {
+    "task_id": "shift_3",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Add 7 to every element of the list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-7, -2, 5, -9, 0, 20, 4] == [0, 5, 12, -2, 7, 27, 11]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:sum_0",
+   "meta": {
+    "task_id": "sum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-8, 8] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:product_0",
+   "meta": {
+    "task_id": "product_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the product of the list xs (1 for an empty list).\nDefine `solve n` (you may add helper definitions).\nExample: solve [0, 2, 2] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_gt_0",
+   "meta": {
+    "task_id": "count_gt_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count how many elements of xs are greater than 0.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [6, -9, 12, 12] == 3\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_gt_1",
+   "meta": {
+    "task_id": "count_gt_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count how many elements of xs are greater than 3.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [13, 15, 18, -2, 12] == 4\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_gt_2",
+   "meta": {
+    "task_id": "count_gt_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count how many elements of xs are greater than 10.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-2, 20, 1, 17] == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_lt_0",
+   "meta": {
+    "task_id": "keep_lt_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are less than 0, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-1, 5] == [-1]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_lt_1",
+   "meta": {
+    "task_id": "keep_lt_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are less than 5, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-3, 7, -5, 1] == [-3, -5, 1]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_lt_2",
+   "meta": {
+    "task_id": "keep_lt_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are less than 12, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-1, 13, 11, -4, -5] == [-1, 11, -4, -5]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_mult_0",
+   "meta": {
+    "task_id": "keep_mult_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are divisible by 2, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [13, 12, -1, 18, 1, 20, 1, 14] == [12, 18, 20, 14]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_mult_1",
+   "meta": {
+    "task_id": "keep_mult_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are divisible by 3, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-6, 0, 20] == [-6, 0]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:keep_mult_2",
+   "meta": {
+    "task_id": "keep_mult_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep only the elements of xs that are divisible by 5, in order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [15, 15] == [15, 15]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:squares_0",
+   "meta": {
+    "task_id": "squares_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of squares of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [8] == [64]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:sum_squares_0",
+   "meta": {
+    "task_id": "sum_squares_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the squares of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [16, 5] == 281\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:maximum_0",
+   "meta": {
+    "task_id": "maximum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [3, 7, 7, 12, 1, 8, 1, 19] == 19\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:minimum_0",
+   "meta": {
+    "task_id": "minimum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the smallest element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [13, 6, 10, 6, 20, 11] == 6\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:len_0",
+   "meta": {
+    "task_id": "len_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the number of elements in xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-2, 5, 15, 10, -9, -5, 1] == 7\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:rev_0",
+   "meta": {
+    "task_id": "rev_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return xs reversed.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-6, -4, -2] == [-2, -4, -6]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:last_0",
+   "meta": {
+    "task_id": "last_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the last element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [5, 11] == 11\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:range_sum_0",
+   "meta": {
+    "task_id": "range_sum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of all integers from 1 to n (0 when n is 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 2 == 3\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:range_list_0",
+   "meta": {
+    "task_id": "range_list_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of integers from 0 to n inclusive (empty if n < 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 9 == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:range_list_1",
+   "meta": {
+    "task_id": "range_list_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of integers from 1 to n inclusive (empty if n < 1).\nDefine `solve n` (you may add helper definitions).\nExample: solve 7 == [1, 2, 3, 4, 5, 6, 7]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:range_list_2",
+   "meta": {
+    "task_id": "range_list_2",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of integers from 3 to n inclusive (empty if n < 3).\nDefine `solve n` (you may add helper definitions).\nExample: solve 5 == [3, 4, 5]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:factorial_0",
+   "meta": {
+    "task_id": "factorial_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return n factorial (1 when n is 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 7 == 5040\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:evens_sum_0",
+   "meta": {
+    "task_id": "evens_sum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the even elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [7, 11, 5, 5, 17, 17, 19, -2] == -2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:odds_count_0",
+   "meta": {
+    "task_id": "odds_count_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the odd elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [18, 16, 13] == 1\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:all_pos_0",
+   "meta": {
+    "task_id": "all_pos_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return True if every element of xs is positive, otherwise False.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-5] == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:any_eq_0",
+   "meta": {
+    "task_id": "any_eq_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return True if some element of xs equals 0, otherwise False.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-3, 18, 13, 9, -5] == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:any_eq_1",
+   "meta": {
+    "task_id": "any_eq_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return True if some element of xs equals 5, otherwise False.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [11] == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:abs_all_0",
+   "meta": {
+    "task_id": "abs_all_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every element of xs by its absolute value.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [14, 5, -3, 6, 20, -3, 7] == [14, 5, 3, 6, 20, 3, 7]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:clamp_0",
+   "meta": {
+    "task_id": "clamp_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every element of xs greater than 5 by 5.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [] == []\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:clamp_1",
+   "meta": {
+    "task_id": "clamp_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every element of xs greater than 10 by 10.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [4, 8, 12, -7, 2] == [4, 8, 10, -7, 2]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:prefix_sums_0",
+   "meta": {
+    "task_id": "prefix_sums_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the running (prefix) sums of xs, e.g. [1, 2, 3] -> [1, 3, 6].\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10, -2] == [10, 8]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_eq_arg_0",
+   "meta": {
+    "task_id": "count_eq_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, count how many elements of xs equal k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [-7, 7, 14, 5, 8, 9] 1 == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:add_k_arg_0",
+   "meta": {
+    "task_id": "add_k_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, add k to every element of xs.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [6, 18, -1, -8, 19, -9, -6] (-3) == [3, 15, -4, -11, 16, -12, -9]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:take_gt_arg_0",
+   "meta": {
+    "task_id": "take_gt_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, keep the elements of xs greater than k, in order.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [8, 16, 5, 10] 5 == [8, 16, 10]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:double_evens_0",
+   "meta": {
+    "task_id": "double_evens_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Double the even elements of xs and leave the odd ones unchanged.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-1, -1, 10, 2, 13, 19, 9, -9] == [-1, -1, 20, 4, 13, 19, 9, -9]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:sum_pos_0",
+   "meta": {
+    "task_id": "sum_pos_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the positive elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [4, 11, -5, -4, 14] == 29\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:pow2_0",
+   "meta": {
+    "task_id": "pow2_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return 2 raised to the power n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 5 == 32\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:cubes_0",
+   "meta": {
+    "task_id": "cubes_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of cubes of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-7, 10, -8, 20] == [-343, 1000, -512, 8000]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:sum_odds_0",
+   "meta": {
+    "task_id": "sum_odds_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the odd elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [8, -4, 2] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:max_or_zero_0",
+   "meta": {
+    "task_id": "max_or_zero_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest element of xs, or 0 if xs is empty.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [20, -5, 3, 7] == 20\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:first_or_zero_0",
+   "meta": {
+    "task_id": "first_or_zero_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the first element of xs, or 0 if xs is empty.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-5, 19, -4] == -5\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:first_plus_last_0",
+   "meta": {
+    "task_id": "first_plus_last_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the first element plus the last element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [1, 11, 14, 16, 11] == 12\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:twice_sum_0",
+   "meta": {
+    "task_id": "twice_sum_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return twice the sum of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [18, 15, 12, -5, 13, -9, 12] == 112\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_div_0",
+   "meta": {
+    "task_id": "count_div_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the elements of xs that are divisible by 4.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [12, 8, -8, -6, 3, -6, 7] == 3\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_div_1",
+   "meta": {
+    "task_id": "count_div_1",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the elements of xs that are divisible by 7.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-5] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:neg_to_zero_0",
+   "meta": {
+    "task_id": "neg_to_zero_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every negative element of xs by 0.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [] == []\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:inc_pos_0",
+   "meta": {
+    "task_id": "inc_pos_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Add 1 to the positive elements of xs and leave the others unchanged.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10, -8, 2, -7, -6, -5, 20] == [11, -8, 3, -7, -6, -5, 21]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:sign_0",
+   "meta": {
+    "task_id": "sign_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace each element of xs by 1 if it is positive, -1 if it is negative and 0 if it is zero.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-6, -2, 13, 7, 15, 12, -3, -7] == [-1, -1, 1, 1, 1, 1, -1, -1]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:mul_k_arg_0",
+   "meta": {
+    "task_id": "mul_k_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, multiply every element of xs by k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [1, 20, -2, 0, -3, 17] 8 == [8, 160, -16, 0, -24, 136]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:remove_k_arg_0",
+   "meta": {
+    "task_id": "remove_k_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, remove every element equal to k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [13, -1, -7] 8 == [13, -1, -7]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:count_ge_arg_0",
+   "meta": {
+    "task_id": "count_ge_arg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, count the elements of xs that are at least k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [5, 13] 0 == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:evens_upto_0",
+   "meta": {
+    "task_id": "evens_upto_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of even numbers from 0 to n inclusive.\nDefine `solve n` (you may add helper definitions).\nExample: solve 0 == [0]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:odd_sum_upto_0",
+   "meta": {
+    "task_id": "odd_sum_upto_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the odd numbers from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 10 == 25\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:countdown_0",
+   "meta": {
+    "task_id": "countdown_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of integers from n down to 1 (empty when n is 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 0 == []\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:squares_upto_0",
+   "meta": {
+    "task_id": "squares_upto_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of squares of the integers from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 8 == [1, 4, 9, 16, 25, 36, 49, 64]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:min_plus_max_0",
+   "meta": {
+    "task_id": "min_plus_max_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the smallest plus the largest element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10] == 20\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:all_even_0",
+   "meta": {
+    "task_id": "all_even_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return True if every element of xs is even, otherwise False.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [3, 6] == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "train:has_neg_0",
+   "meta": {
+    "task_id": "has_neg_0",
+    "split": "train"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return True if some element of xs is negative, otherwise False.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-4, 15, -3, 0] == True\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 24,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:mean_floor_0",
+   "meta": {
+    "task_id": "mean_floor_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the non-empty list xs divided by its length (integer division).\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10] == 10\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_between_0",
+   "meta": {
+    "task_id": "count_between_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count elements of xs that are at least 0 and at most 9.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [14] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_between_1",
+   "meta": {
+    "task_id": "count_between_1",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count elements of xs that are at least 3 and at most 6.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [15, -2, 20, 16, 3, 1] == 1\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:square_odds_0",
+   "meta": {
+    "task_id": "square_odds_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Square the odd elements of xs and drop the even ones.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [11, -1, 6, 19, 1, -4, 15, 12] == [121, 1, 361, 1, 225]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:max_minus_min_0",
+   "meta": {
+    "task_id": "max_minus_min_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest element minus the smallest element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [2, 13, 17] == 15\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_range_sq_0",
+   "meta": {
+    "task_id": "sum_range_sq_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the squares of the integers from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 3 == 14\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:neg_count_0",
+   "meta": {
+    "task_id": "neg_count_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the negative elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [3, 9, 20] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:triple_sum_0",
+   "meta": {
+    "task_id": "triple_sum_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of xs by 3 and return the sum.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [15, 7, 7] == 87\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:none_gt_arg_0",
+   "meta": {
+    "task_id": "none_gt_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, return True if no element of xs is greater than k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [3, 19] 8 == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:evens_then_rev_0",
+   "meta": {
+    "task_id": "evens_then_rev_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep the even elements of xs and return them in reverse order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [11, 8, -1, 13, 14, 20, 17] == [20, 14, 8]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:fib_0",
+   "meta": {
+    "task_id": "fib_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the n-th Fibonacci number, with fib 0 = 0 and fib 1 = 1.\nDefine `solve n` (you may add helper definitions).\nExample: solve 3 == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:pos_squares_0",
+   "meta": {
+    "task_id": "pos_squares_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Square the positive elements of xs and drop the others.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [8] == [64]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_odd_pos_0",
+   "meta": {
+    "task_id": "count_odd_pos_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the elements of xs that are both odd and positive.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [0, 18, -7, 12] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:double_keep_big_0",
+   "meta": {
+    "task_id": "double_keep_big_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Double every element of xs, then keep only the results greater than 10.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [16, -3, -1, -9] == [32]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:odds_upto_0",
+   "meta": {
+    "task_id": "odds_upto_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of odd numbers from 1 to n inclusive.\nDefine `solve n` (you may add helper definitions).\nExample: solve 5 == [1, 3, 5]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:max_abs_0",
+   "meta": {
+    "task_id": "max_abs_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest absolute value among the elements of xs, or 0 if xs is empty.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [12, 6, 6] == 12\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_ne_arg_0",
+   "meta": {
+    "task_id": "count_ne_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, count the elements of xs that are not equal to k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [9, -6] 1 == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:last_minus_first_0",
+   "meta": {
+    "task_id": "last_minus_first_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the last element minus the first element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [1, 8, 7, 6, 11] == 10\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_abs_0",
+   "meta": {
+    "task_id": "sum_abs_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the absolute values of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [17] == 17\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:triangular_0",
+   "meta": {
+    "task_id": "triangular_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list [1, 1 + 2, 1 + 2 + 3, ...] up to 1 + 2 + ... + n (empty when n is 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 9 == [1, 3, 6, 10, 15, 21, 28, 36, 45]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 8,
+   "temperature": 0.8,
+   "max_tokens": 512
+  }
+ ],
+ "eval_requests": [
+  {
+   "id": "eval:mean_floor_0",
+   "meta": {
+    "task_id": "mean_floor_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the non-empty list xs divided by its length (integer division).\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10] == 10\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_between_0",
+   "meta": {
+    "task_id": "count_between_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count elements of xs that are at least 0 and at most 9.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [14] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_between_1",
+   "meta": {
+    "task_id": "count_between_1",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count elements of xs that are at least 3 and at most 6.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [15, -2, 20, 16, 3, 1] == 1\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:square_odds_0",
+   "meta": {
+    "task_id": "square_odds_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Square the odd elements of xs and drop the even ones.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [11, -1, 6, 19, 1, -4, 15, 12] == [121, 1, 361, 1, 225]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:max_minus_min_0",
+   "meta": {
+    "task_id": "max_minus_min_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest element minus the smallest element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [2, 13, 17] == 15\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_range_sq_0",
+   "meta": {
+    "task_id": "sum_range_sq_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the squares of the integers from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 3 == 14\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:neg_count_0",
+   "meta": {
+    "task_id": "neg_count_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the negative elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [3, 9, 20] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:triple_sum_0",
+   "meta": {
+    "task_id": "triple_sum_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Multiply every element of xs by 3 and return the sum.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [15, 7, 7] == 87\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:none_gt_arg_0",
+   "meta": {
+    "task_id": "none_gt_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, return True if no element of xs is greater than k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [3, 19] 8 == False\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:evens_then_rev_0",
+   "meta": {
+    "task_id": "evens_then_rev_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Keep the even elements of xs and return them in reverse order.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [11, 8, -1, 13, 14, 20, 17] == [20, 14, 8]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:fib_0",
+   "meta": {
+    "task_id": "fib_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the n-th Fibonacci number, with fib 0 = 0 and fib 1 = 1.\nDefine `solve n` (you may add helper definitions).\nExample: solve 3 == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:pos_squares_0",
+   "meta": {
+    "task_id": "pos_squares_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Square the positive elements of xs and drop the others.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [8] == [64]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_odd_pos_0",
+   "meta": {
+    "task_id": "count_odd_pos_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count the elements of xs that are both odd and positive.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [0, 18, -7, 12] == 0\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:double_keep_big_0",
+   "meta": {
+    "task_id": "double_keep_big_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Double every element of xs, then keep only the results greater than 10.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [16, -3, -1, -9] == [32]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:odds_upto_0",
+   "meta": {
+    "task_id": "odds_upto_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of odd numbers from 1 to n inclusive.\nDefine `solve n` (you may add helper definitions).\nExample: solve 5 == [1, 3, 5]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:max_abs_0",
+   "meta": {
+    "task_id": "max_abs_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the largest absolute value among the elements of xs, or 0 if xs is empty.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [12, 6, 6] == 12\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_ne_arg_0",
+   "meta": {
+    "task_id": "count_ne_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, count the elements of xs that are not equal to k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [9, -6] 1 == 2\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:last_minus_first_0",
+   "meta": {
+    "task_id": "last_minus_first_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the last element minus the first element of the non-empty list xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [1, 8, 7, 6, 11] == 10\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_abs_0",
+   "meta": {
+    "task_id": "sum_abs_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the absolute values of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [17] == 17\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:triangular_0",
+   "meta": {
+    "task_id": "triangular_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list [1, 1 + 2, 1 + 2 + 3, ...] up to 1 + 2 + ... + n (empty when n is 0).\nDefine `solve n` (you may add helper definitions).\nExample: solve 9 == [1, 3, 6, 10, 15, 21, 28, 36, 45]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:halve_evens_0",
+   "meta": {
+    "task_id": "halve_evens_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Divide every even element of xs by 2 and leave the odd ones unchanged.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-9, 8, 17, -4, 3, 5] == [-9, 4, 17, -2, 3, 5]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_gt_arg_0",
+   "meta": {
+    "task_id": "sum_gt_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, return the sum of the elements of xs that are greater than k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [-6, 17, 13, 8, 12] 4 == 50\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:cube_sum_0",
+   "meta": {
+    "task_id": "cube_sum_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the cubes of the elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10, -9, -2, 13] == 2460\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_zero_0",
+   "meta": {
+    "task_id": "count_zero_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Count how many elements of xs are equal to 0.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [0, -2] == 1\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sq_minus_one_0",
+   "meta": {
+    "task_id": "sq_minus_one_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every element x of xs by x * x - 1.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [7, 5, -1, 2, 19, -6] == [48, 24, 0, 3, 360, 35]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:all_lt_arg_0",
+   "meta": {
+    "task_id": "all_lt_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, return True if every element of xs is less than k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [] (-2) == True\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:evens_sq_sum_0",
+   "meta": {
+    "task_id": "evens_sq_sum_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the squares of the even elements of xs.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [20, -8] == 464\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:mult3_upto_0",
+   "meta": {
+    "task_id": "mult3_upto_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of multiples of 3 from 3 to n inclusive.\nDefine `solve n` (you may add helper definitions).\nExample: solve 8 == [3, 6]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:pow3_0",
+   "meta": {
+    "task_id": "pow3_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return 3 raised to the power n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 10 == 59049\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_double_odds_0",
+   "meta": {
+    "task_id": "sum_double_odds_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Double the odd elements of xs and return the sum of all elements afterwards.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-5, 11] == 12\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:drop_first_0",
+   "meta": {
+    "task_id": "drop_first_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return xs without its first element (the empty list stays empty).\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-2, -8] == [-8]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:count_lt_arg_0",
+   "meta": {
+    "task_id": "count_lt_arg_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, count the elements of xs that are less than k.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [17, 2, 1, 5, -6, -3, 1, 14] 10 == 6\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:clamp_low_0",
+   "meta": {
+    "task_id": "clamp_low_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Replace every element of xs that is less than 3 by 3.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-7, 2] == [3, 3]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_range_cubes_0",
+   "meta": {
+    "task_id": "sum_range_cubes_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of the cubes of the integers from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 9 == 2025\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:double_list_0",
+   "meta": {
+    "task_id": "double_list_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return xs followed by xs again (the list concatenated with itself).\nDefine `solve xs` (you may add helper definitions).\nExample: solve [10, -4, 13, 20, 6, 6, 7, -7] == [10, -4, 13, 20, 6, 6, 7, -7, 10, -4, 13, 20, 6, 6, 7, -7]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:pos_count_arg_scaled_0",
+   "meta": {
+    "task_id": "pos_count_arg_scaled_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Given xs and k, multiply every positive element of xs by k and drop the others.\nDefine `solve xs k` (you may add helper definitions).\nExample: solve [17] 9 == [153]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:min_or_zero_0",
+   "meta": {
+    "task_id": "min_or_zero_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the smallest element of xs, or 0 if xs is empty.\nDefine `solve xs` (you may add helper definitions).\nExample: solve [20, -7, 13, 9] == -7\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:abs_diff_first_0",
+   "meta": {
+    "task_id": "abs_diff_first_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the list of absolute differences between each element of xs and the first element (empty for an empty list).\nDefine `solve xs` (you may add helper definitions).\nExample: solve [-8, 17, -5, -2, -5, 7, -6, 14] == [0, 25, 3, 6, 3, 15, 2, 22]\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  },
+  {
+   "id": "eval:sum_index_upto_0",
+   "meta": {
+    "task_id": "sum_index_upto_0",
+    "split": "eval"
+   },
+   "messages": [
+    {
+     "role": "user",
+     "content": "Sutra is a tiny pure functional language (Haskell-like, call-by-value).\n- Values: integers, True/False, lists like [1, 2, 3].\n- Definitions: `name arg1 arg2 = expr`, one per line; may be recursive.\n- Expressions: application `f x y`, lambda `\\x -> e` or `\\acc x -> e`, `let x = e in e`,\n  `if c then a else b`, cons `x : xs`, operators + - * / % (integer), == /= < <= > >=, && ||.\n- A minus sign in front works only on a number literal like `-3`; write `0 - x` to negate a variable.\n- Builtins: map, filter, foldl, foldr, length, head, tail, null, range a b (inclusive), reverse, sum, max, min, not.\n- There is no pattern matching, no where, no type signatures, no guards.\n\nExample:\ndouble x = x * 2\nsolve xs = foldl (\\acc x -> acc + x) 0 (map double (filter (\\x -> x > 0) xs))\n\nTask: Return the sum of i * i - i for i from 1 to n.\nDefine `solve n` (you may add helper definitions).\nExample: solve 7 == 112\nReply with only the Sutra program in one ```sutra code block."
+    }
+   ],
+   "n": 20,
+   "temperature": 0.8,
+   "max_tokens": 512
+  }
+ ],
+ "student": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+ "hparams": {
+  "precision": "fp32",
+  "num_epochs": 3,
+  "max_steps": -1,
+  "batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0002,
+  "max_seq_length": 1024,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "seed": 16,
+  "assistant_only_loss": true
+ },
+ "max_seconds": 5400
+}

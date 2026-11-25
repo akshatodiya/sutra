@@ -32,40 +32,37 @@ zero data trainable.
 
 ## Results
 
-I fine-tuned Qwen2.5-Coder-1.5B-Instruct with LoRA (AlignTune) on 295 Sutra programs written by a
-bigger model, served everything with SGLang, and scored with AuditKIT using the interpreter as the
-metric. The test set is 39 tasks that the model never saw in training (38 task families that are not
-in training at all). Each task has 6 or 7 tests, and each model answered every task 20 times at
-temperature 0.8.
+These are the latest portfolio results, completed on 28 October after submission.
+The published hackathon submission remains unchanged. Full counts and validation are in
+[`llm/runs/latest/REPORT.md`](llm/runs/latest/REPORT.md).
+
+I fine-tuned Qwen2.5-Coder-1.5B-Instruct with LoRA (AlignTune) on 298 Sutra programs per set,
+served everything with SGLang, and scored with AuditKIT using the interpreter as the metric.
+The test set is 39 tasks from 38 families absent from training. Each task has 6 or 7 tests,
+and each model answered every task 20 times at temperature 0.8.
 
 | Model | Pass rate | Gain over base, 95% CI |
 |---|---:|---|
-| Base model, no training | **7.9%** (62/780) | |
-| Trained on raw data from the big model | **45.3%** (353/780) | +37.3 points [+26.8, +47.4] |
-| Trained on checked (curated) data | **53.3%** (416/780) | +45.4 points [+34.0, +56.4] |
+| Base model, no training | **7.4%** (58/780) | |
+| Trained on raw data from the big model | **45.6%** (356/780) | +38.2 points [+28.2, +48.2] |
+| Trained on checked (curated) data | **68.3%** (533/780) | +60.9 points [+51.5, +69.9] |
 
-- **Curated beats raw by +8.1 points, 95% CI [+2.8, +13.2].** Both used the same number of rows per
-  task, the same prompts, the same settings and the same seed. Curated is better on 24 tasks, raw on
-  8, and 7 are a tie.
-- **The small curated model is about as good as its 7B teacher.** On the 20 test tasks that the
-  teacher also answered, the teacher gets 43.1%, the curated 1.5B model 49.2% and the raw one 38.0%.
-  The difference with the teacher is +6.1 points, CI [-10.5, +22.4], so it is not a clear win. Also the
-  teacher used SGLang's default sampling settings, so take this as a rough reference only.
-- **Ten tries, one answer (job 6).** If the curated model gets 10 tries per task and the interpreter
-  picks one, it goes from 53.3% to **80.0%** (gain +26.7 points, CI [+19.3, +34.3]). That is close to
-  81.6%, the share of tasks where at least one of the 10 tries is right. No hidden test is used for
-  picking. The raw model goes from 45.3% to 75.3%, so with ten tries the curated lead becomes +4.8
-  points (CI [-2.4, +12.9], not significant). So curation matters most when the model gets one try.
-- Most of what curation fixes is the language itself: parse errors go down from 200 to 138, and
-  unknown names from 79 to 34.
-- With a 0.5B model the picture is the same, just lower: base 1.0%, raw 30.1%, curated 35.8% (curated
-  vs raw +5.6 points, CI [+0.3, +11.9]), and 73.5% for curated with ten tries. Outputs are in
-  `llm/runs/train_eval_0.5b/`.
-- The big model's data: 1,150 of its 1,632 programs (70.5%) pass all tests. The repair step fixes 164
-  of the 456 failed ones (36.0%), and it solves 2 of the 4 training tasks where no first try was right.
+- **Curated beats raw by +22.7 points, 95% CI [+15.6, +30.1].** Both used the same number of rows
+  per task, prompts, answer format, hyperparameters and seed. Curated is better on 30 tasks, raw
+  on 3, with 6 ties. Both sets contain 298 rows across 67 of the 68 training tasks.
+- **Ten tries, one answer (job 6).** The interpreter selects from ten curated-model answers using
+  the visible example and output agreement, reaching **89.0%** from 68.3% (gain +20.7 points,
+  CI [+14.1, +27.7]). No hidden expected output is used to select. Raw reaches 74.9%, giving
+  curated a +14.1-point lead, CI [+6.4, +23.1]. These estimates average 400 draws from each task's
+  20 saved answers. The chance that at least one of ten curated answers is correct is 92.2%.
+- Curated has fewer parse errors than raw (51 vs 126) and fewer unknown-name errors (36 vs 129).
+- The teacher produces 1,161 passing training programs out of 1,632 (71.1%). Interpreter-guided
+  repair fixes 176 of the 471 failed programs (37.4%).
 
-AuditKIT prints a ± that treats every answer as independent. The 20 answers to one task are not
-independent, so all intervals above resample whole tasks (bootstrap, 10,000 rounds).
+All 2,340 student verdicts and all 298 curated training programs were rechecked locally with
+identical results. AuditKIT prints a ± that treats every answer as independent. The 20 answers
+to one task are correlated, so all intervals above resample whole tasks (10,000 bootstrap rounds,
+seed 16). The complete cloud pipeline took 53 minutes 37 seconds.
 
 ## How it works
 
@@ -127,11 +124,12 @@ hardware will hit:
 2. **SGLang parallel sampling** (`n > 1`) used up the request slots and killed the scheduler. One
    request per sample works.
 3. **SGLang quietly adds the model's `generation_config`** (repetition penalty, top-k, top-p) on top of
-   your request. Every request here sets these values itself.
-4. **AlignTune `create_sft_trainer` stops after 10 steps** unless you pass `max_steps=-1`, whatever
-   `num_epochs` says.
+   your request. Student requests set these values explicitly. The teacher retains its recorded
+   decoding settings, which differ from the student's, so it is only a rough reference.
+4. **AlignTune computes a step budget when `max_steps` is omitted**, with a minimum of 10
+   optimizer steps. Passing `max_steps=-1` lets `num_epochs` control training.
 5. **AlignTune's dependencies** pull in vLLM, xformers and PyICU even for plain SFT. SFT and merging
-   work with `--no-deps` plus eight small packages (see `llm/kaggle/build.py`).
+   work with `--no-deps` and explicit SFT/merge dependencies (see `llm/kaggle/build.py`).
 6. **AlignTune `PEFTMerger` with SGLang**: the merged `config.json` is written in the transformers-5
    format (`rope_parameters`). SGLang's transformers 4.57 then reads `rope_theta` as 10,000 instead of
    1,000,000, without any warning. The merged model scored 1/220 on SGLang but 48/88 with the same
@@ -144,22 +142,20 @@ cd fp && npm ci && npm run build && npm test            # interpreter, CLI and v
 cd ../llm && python3 -m venv .venv && .venv/bin/pip install kaggle curatorkit==0.1.22 auditkit==1.1.3
 python tasks.py                                         # task bank -> data/tasks_{train,eval}.jsonl
 export KAGGLE_USERNAME=<your Kaggle username>
-python kaggle/build.py teacher_gen      # then: kaggle kernels push -p kaggle/jobs/teacher_gen --accelerator NvidiaTeslaT4
-python verify.py runs/teacher_gen/outputs_Qwen2.5-Coder-7B-Instruct.jsonl runs/teacher_gen/verified.jsonl
-python kaggle/build.py teacher_repair   # push, then verify the same way into runs/teacher_repair/verified.jsonl
-python curate.py runs/teacher_gen/verified.jsonl runs/teacher_repair/verified.jsonl data/sft
-python kaggle/build.py train_eval       # push; outputs land in runs/train_eval/
-python evaluate.py runs/train_eval
-python best_of_k.py runs/train_eval                     # ten tries -> one answer, no GPU needed
+python kaggle/build.py latest                           # builds the complete current pipeline
+# Ask before launching the GPU job:
+kaggle kernels push -p kaggle/jobs/latest --accelerator NvidiaTeslaT4 -t 5400
+# Download cloud output to a temporary folder, validate it, then replace runs/latest/.
+python evaluate.py runs/latest/train_eval
+python best_of_k.py runs/latest/train_eval
 ```
 
 Each Kaggle job is one script with its prompts, data, settings and package versions inside it. The
-exact script behind the numbers above is saved next to them as `llm/runs/train_eval/job.py`.
+exact script behind the numbers above is saved next to them as `llm/runs/latest/train_eval/job.py`.
 
-**Trained adapters.** `llm/runs/train_eval/adapters/{raw,curated}/` are the two LoRA adapters behind
+**Trained adapters.** `llm/runs/latest/train_eval/adapters/{raw,curated}/` are the two LoRA adapters behind
 the results (r = 16, on top of `Qwen/Qwen2.5-Coder-1.5B-Instruct`; the tokenizer is the base model's).
-I loaded them again on a Mac and checked one greedy answer per test task: base 2.6%, raw 48.7%,
-curated 59.0%, the same order as above.
+Their hashes and completed GPU training checks are recorded in `llm/runs/latest/RESULTS.json`.
 
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -167,7 +163,7 @@ from peft import PeftModel
 
 base = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
 tok = AutoTokenizer.from_pretrained(base)
-model = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(base), "llm/runs/train_eval/adapters/curated")
+model = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(base), "llm/runs/latest/train_eval/adapters/curated")
 ```
 
 Prompts come from `llm/prompts.py` (`messages(task)`). Check the answers with `fp/dist/sutra.js check`.
@@ -175,8 +171,9 @@ Prompts come from `llm/prompts.py` (`messages(task)`). Check the answers with `f
 ## Limitations
 
 - 39 test tasks is a small number. That is why every claim comes with an interval that resamples tasks.
-- The training loss covers the whole chat, prompt included, because that is how AlignTune's chat
-  path works. It is the same for raw and curated.
+- Both current sets use answer-only loss. Relative to the submitted run, prompt clarification,
+  loss masking and regenerated stochastic teacher data changed together; their individual effects
+  have not been isolated. Training uses one seed.
 - The test families are new functions, but they use the same building blocks and task style as
   training.
 - For ten tries, the fresh inputs come from each task's own input generator. In real use a person
@@ -185,8 +182,9 @@ Prompts come from `llm/prompts.py` (`messages(task)`). Check the answers with `f
 
 ## Prior work
 
-None. Everything here was written during the hackathon (23 to 25 Oct 2026). Outside code is used only
-as published packages (Elm, SGLang, the Lexsi toolkits, Qwen models).
+No project code predates the hackathon. The submitted core was written on 23 to 25 October 2026;
+the latest local experiments and portfolio improvements were made afterwards and are labeled above.
+Outside code is used as published packages (Elm, SGLang, the Lexsi toolkits, Qwen models).
 
 ## License
 

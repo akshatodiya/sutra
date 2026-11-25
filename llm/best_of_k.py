@@ -5,7 +5,7 @@ Of k sampled programs, keep those that pass the example shown in the prompt, run
 reduction steps breaks ties. The pick is scored on the task's full tests, averaged over 400 random draws
 of k of the 20 samples per task.
 
-usage: python best_of_k.py runs/train_eval
+usage: python best_of_k.py runs/latest/train_eval
 """
 import json
 import random

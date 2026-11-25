@@ -2,16 +2,17 @@
 # One Kaggle GPU session: (optional) AlignTune LoRA SFT + PEFTMerger merge for each training set,
 # then SGLang serves each model in turn and answers every request.
 # Outputs in /kaggle/working: outputs_<model>.jsonl, run.json, logs.
-import json, os, subprocess, sys, time, urllib.request
+import json, os, signal, subprocess, sys, time, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-OUT = "/kaggle/working"
+OUT = os.environ.get("SUTRA_OUT", "/kaggle/working")
+os.makedirs(OUT, exist_ok=True)
 JOB = json.loads(r'''__JOB__''')
 REQUESTS = json.loads(r'''__REQUESTS__''')
 TRAIN = json.loads(r'''__TRAIN__''')  # {} or {"student", "hparams", "sets": {name: [messages rows]}}
 VENV = "/kaggle/tmp/sgl"
 PY = f"{VENV}/bin/python"
-run = {"job": JOB, "n_requests": len(REQUESTS), "models": {}}
+run = {"job": JOB, "n_requests": len(REQUESTS), "models": {}, "hparams": TRAIN.get("hparams")}
 t0 = time.time()
 os.makedirs("/kaggle/tmp", exist_ok=True)
 
@@ -33,14 +34,42 @@ def post(path, body, timeout=600):
 
 # ---- training (AlignTune, Kaggle's own Python) ----
 TRAIN_ONE = r"""
-import json, sys
+import json, os, sys
 from aligntune.core.backend_factory import create_sft_trainer
 from aligntune.core.merge.peft_merger import PEFTMerger
 name, student, hp = sys.argv[1], sys.argv[2], json.loads(sys.argv[3])
+out = os.environ.get("SUTRA_OUT", "/kaggle/working")
 trainer = create_sft_trainer(model_name=student, dataset_name=f"/kaggle/tmp/{name}.jsonl", backend="trl",
-                             output_dir=f"/kaggle/working/adapters/{name}", use_peft=True, **hp)
+                             output_dir=f"{out}/adapters/{name}", use_peft=True, **hp)
 print(json.dumps(trainer.train(), default=str)[:2000])
-PEFTMerger().merge_lora(base_model=student, adapter_path=f"/kaggle/working/adapters/{name}",
+# Check the resolved native trainer, rather than assuming the factory accepted every setting.
+native = trainer.trainer
+args = native.args
+expected = {"num_train_epochs": hp["num_epochs"], "max_steps": hp["max_steps"],
+            "per_device_train_batch_size": hp["batch_size"], "gradient_accumulation_steps": hp["gradient_accumulation_steps"],
+            "learning_rate": hp["learning_rate"], "max_length": hp["max_seq_length"], "seed": hp["seed"],
+            "fp16": False, "bf16": False, "assistant_only_loss": hp.get("assistant_only_loss", False)}
+actual = {k: getattr(args, k) for k in expected}
+assert actual == expected, (actual, expected)
+assert abs(native.state.epoch - hp["num_epochs"]) < 0.01, native.state.epoch
+peft = native.model.peft_config["default"]
+assert (peft.r, peft.lora_alpha, peft.lora_dropout) == (hp["lora_r"], hp["lora_alpha"], hp["lora_dropout"])
+assert all(str(p.dtype) == "torch.float32" for p in native.model.parameters() if p.requires_grad)
+masked = supervised = 0
+for row in native.train_dataset:
+    batch = native.data_collator([row])
+    ids, labels = batch["input_ids"][0].tolist(), batch["labels"][0].tolist()
+    assert len(ids) <= hp["max_seq_length"]
+    assert all(y == -100 or y == x for x, y in zip(ids, labels))
+    assert any(y != -100 for y in labels), "answer entirely masked"
+    if hp.get("assistant_only_loss"):
+        assert labels[0] == -100 and any(row["assistant_masks"]), "prompt masking missing"
+        assert all(y == -100 for y, m in zip(labels, row["assistant_masks"]) if not m)
+    masked += sum(y == -100 for y in labels)
+    supervised += sum(y != -100 for y in labels)
+json.dump({"args": actual, "epoch": native.state.epoch, "global_step": native.state.global_step,
+           "masked_tokens": masked, "supervised_tokens": supervised}, open(f"{out}/training_check_{name}.json", "w"), indent=1)
+PEFTMerger().merge_lora(base_model=student, adapter_path=f"{out}/adapters/{name}",
                         output_path=f"/kaggle/tmp/merged/{name}", torch_dtype="float16")
 # The merger writes a transformers-5 config (rope_theta inside rope_parameters). SGLang 0.5.4 runs transformers
 # 4.57, misses it and silently uses rope_theta=10000. LoRA leaves the architecture unchanged: reuse the base config.
@@ -55,6 +84,9 @@ if TRAIN:
     run["train_versions"] = subprocess.run("pip list 2>/dev/null | grep -i -E '^(torch|transformers|trl|peft|accelerate|datasets|torchao|aligntune|curatorkit) '",
                                            shell=True, capture_output=True, text=True).stdout
     save()
+    if run["train_pip_rc"] != 0:
+        sys.exit("training dependencies failed")
+    sh(f"{sys.executable} -m pip freeze", "train_freeze.txt")
     for name, rows in TRAIN["sets"].items():
         with open(f"/kaggle/tmp/{name}.jsonl", "w") as f:
             f.writelines(json.dumps(r) + "\n" for r in rows)
@@ -80,20 +112,50 @@ assert old in s
 p.write_text(s.replace(old, "        if _is_cuda:\n            return self.forward_native\n", 1))
 """
 open("/kaggle/tmp/patch.py", "w").write(PATCH)
-run["sglang_pip_rc"] = sh(f"pip install -q uv && uv venv -q -p 3.12 {VENV} && "
-                          f"uv pip install -q -p {PY} '{JOB['sglang']}' && {PY} /kaggle/tmp/patch.py {VENV}", "sglang_pip.log")
+if os.path.exists(PY):
+    run["sglang_pip_rc"] = 0  # earlier phase of this same private kernel already installed and patched it
+else:
+    run["sglang_pip_rc"] = sh(f"pip install -q uv && uv venv -q -p 3.12 {VENV} && "
+                              f"uv pip install -q -p {PY} {JOB['sglang']} && {PY} /kaggle/tmp/patch.py {VENV}", "sglang_pip.log")
 save()
 run["sglang_versions"] = subprocess.run(f"uv pip list -p {PY} 2>/dev/null | grep -i -E '^(sglang|sgl-kernel|torch|transformers|flashinfer-python) '",
                                         shell=True, capture_output=True, text=True).stdout
 if run["sglang_pip_rc"] != 0:
     sys.exit("sglang install failed")
+if sh(f"{PY} -m pip freeze", "sglang_freeze.txt") != 0:
+    # uv venvs need not have pip installed.
+    sh(f"uv pip freeze -p {PY}", "sglang_freeze.txt")
+
+
+# SGLang imports its benchmark helpers during model loading; validate this path before serving.
+ENV_CHECK = r"""
+import json
+from importlib.metadata import version
+expected = {"sglang": "0.5.4.post3", "torch": "2.8.0", "transformers": "4.57.1",
+            "datasets": "4.8.5", "pyarrow": "26.0.0"}
+actual = {name: version(name) for name in expected}
+assert actual == expected, (actual, expected)
+from sglang.utils import is_in_ci
+ci = is_in_ci()  # exercises the exact import path that failed previously; no model load
+from datasets import Dataset, Features, Array2D
+assert Dataset.from_dict({"text": ["check"]}).to_list() == [{"text": "check"}]
+array = Dataset.from_dict({"matrix": [[[1., 2.], [3., 4.]]]},
+                         features=Features({"matrix": Array2D(shape=(2, 2), dtype="float32")}))
+assert array[0]["matrix"] == [[1., 2.], [3., 4.]]
+print(json.dumps({"status": "passed", "versions": actual, "is_in_ci": ci}))
+"""
+open("/kaggle/tmp/check_inference.py", "w").write(ENV_CHECK)
+run["sglang_import_check_rc"] = sh(f"{PY} /kaggle/tmp/check_inference.py", "sglang_import_check.log")
+save()
+if run["sglang_import_check_rc"] != 0:
+    sys.exit("inference environment import check failed; see sglang_import_check.log")
 
 
 def sample(model, r):
     # One n=1 call per sample: SGLang 0.5.4 parallel sampling (n>1) can exhaust request slots and kill the scheduler.
     # Explicit sampling: otherwise SGLang silently adds the model's generation_config (top_k, top_p, repetition_penalty).
     body = {"model": model, "messages": r["messages"], "n": 1, "temperature": r["temperature"], "max_tokens": r["max_tokens"],
-            "top_p": 1.0, "top_k": -1, "repetition_penalty": 1.0}
+            **JOB.get("sampling", {"top_p": 1.0, "top_k": -1, "repetition_penalty": 1.0})}
     err = None
     for _ in range(3):
         try:
@@ -125,17 +187,23 @@ for m in models:
            "--dtype", "half", "--port", "30000",
            "--tp", str(JOB["tp"]), "--mem-fraction-static", str(JOB["mem"]), "--context-length", str(JOB["ctx"]),
            *JOB["server_flags"]]
-    srv = subprocess.Popen(cmd, stdout=open(f"{OUT}/server_{m['name']}.log", "w"), stderr=subprocess.STDOUT)
-    t = time.time()
-    while time.time() - t < 1200 and srv.poll() is None and "up_seconds" not in info:
-        time.sleep(5)
-        try:
-            urllib.request.urlopen("http://127.0.0.1:30000/health", timeout=5)
-            info["up_seconds"] = round(time.time() - t)
-        except Exception:
-            pass
-    save()
-    if "up_seconds" in info:
+    if m["name"] in JOB.get("server_seeds", {}):
+        cmd += ["--random-seed", str(JOB["server_seeds"][m["name"]])]
+    info["command"] = cmd
+    srv = subprocess.Popen(cmd, stdout=open(f"{OUT}/server_{m['name']}.log", "w"), stderr=subprocess.STDOUT,
+                           start_new_session=True)
+    try:
+        t = time.time()
+        while time.time() - t < 1200 and srv.poll() is None and "up_seconds" not in info:
+            time.sleep(5)
+            try:
+                urllib.request.urlopen("http://127.0.0.1:30000/health", timeout=5).close()
+                info["up_seconds"] = round(time.time() - t)
+            except Exception:
+                pass
+        save()
+        if "up_seconds" not in info:
+            sys.exit(f"server {m['name']} did not become healthy")
         t = time.time()
         with open(f"{OUT}/outputs_{m['name']}.jsonl", "w") as f, ThreadPoolExecutor(JOB["concurrency"]) as ex:
             for row in answer_all(m["path"], ex):
@@ -143,12 +211,24 @@ for m in models:
                 if "error" in row:
                     info["errors"] = info.get("errors", 0) + 1
         info["gen_seconds"] = round(time.time() - t)
-    srv.terminate()
-    try:
-        srv.wait(60)
-    except subprocess.TimeoutExpired:
-        srv.kill()
-    save()
+    finally:
+        # Own the entire server process group, including TP workers, before loading the next model.
+        try:
+            os.killpg(srv.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        try:
+            srv.wait(60)
+        except subprocess.TimeoutExpired:
+            pass
+        try:
+            os.killpg(srv.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        srv.wait()
+        save()
+    if info.get("errors"):
+        sys.exit(f"incomplete generation for {m['name']}")
 run["total_seconds"] = round(time.time() - t0)
 save()
 print(json.dumps(run, indent=1, default=str)[:3000])

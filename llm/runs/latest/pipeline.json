@@ -1,0 +1,93 @@
+{
+ "status": "complete",
+ "source_hashes": {
+  "llm/prompts.py": "e0ab69ad86900ec10fca567687ffeff3951d5120e7e9934596c512c457f8f888",
+  "llm/tasks.py": "3882f8f076bcb685c5ee6101434c4ddddcd5db81ce23d1bbce22c69ba764f6f3",
+  "llm/verify.py": "f52eed565b6013bc298da74e8eaa2e3462157e8207aa653a4d5203b5c033c879",
+  "llm/curate.py": "6bff538295b5bad95e1f4408ade4f3ea65802960ce3335adc292bfa29b048d9e",
+  "llm/evaluate.py": "b1456a532a060a6108c96022d4d058080c760674f3b1532c1b6da1fe3faef100",
+  "llm/best_of_k.py": "b57b4410fde5fbfaa20bbd097247bb7fb702b8f550b3f9edae56b15495a03296",
+  "llm/data/tasks_train.jsonl": "2034609b34a81bbc402ef23d9c6cc55cb5a53bcf4c86f58f3c27553e5ed70b9a",
+  "llm/data/tasks_eval.jsonl": "cf280efab515c3006b3aa743817858c05247d15c3e9680a90b6abf2550db87fb",
+  "fp/dist/sutra.js": "cdabea090706ecba01214fbd27569eaf5fa62d952b04cc33539932d4e4ca9a8d",
+  "llm/kaggle/job.py.tmpl": "8e20ddbe26416d465b0373de0214331b3a73b33280d8eac3993e4843cba6f90f"
+ },
+ "hparams": {
+  "precision": "fp32",
+  "num_epochs": 3,
+  "max_steps": -1,
+  "batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0002,
+  "max_seq_length": 1024,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "seed": 16,
+  "assistant_only_loss": true
+ },
+ "stages": {
+  "hardware": {
+   "rc": 0,
+   "seconds": 0
+  },
+  "toolkits": {
+   "rc": 0,
+   "seconds": 4
+  },
+  "node": {
+   "rc": 0,
+   "seconds": 0
+  },
+  "teacher_gen": {
+   "rc": 0,
+   "seconds": 695
+  },
+  "verify_teacher_gen_Qwen2.5-Coder-7B-Instruct": {
+   "rc": 0,
+   "seconds": 9
+  },
+  "teacher_repair": {
+   "rc": 0,
+   "seconds": 150
+  },
+  "verify_teacher_repair_Qwen2.5-Coder-7B-Instruct": {
+   "rc": 0,
+   "seconds": 8
+  },
+  "curate": {
+   "rc": 0,
+   "seconds": 1
+  },
+  "train_eval": {
+   "rc": 0,
+   "seconds": 2086
+  },
+  "verify_train_eval_Qwen2.5-Coder-1.5B-Instruct": {
+   "rc": 0,
+   "seconds": 2
+  },
+  "verify_train_eval_raw": {
+   "rc": 0,
+   "seconds": 6
+  },
+  "verify_train_eval_curated": {
+   "rc": 0,
+   "seconds": 6
+  },
+  "evaluate": {
+   "rc": 0,
+   "seconds": 225
+  },
+  "best_of_k": {
+   "rc": 0,
+   "seconds": 20
+  },
+  "versions": {
+   "rc": 0,
+   "seconds": 1
+  }
+ },
+ "current": "versions",
+ "seconds": 3217
+}

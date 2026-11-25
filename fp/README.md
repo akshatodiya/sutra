@@ -71,7 +71,7 @@ The data is in `assets/showcase.json`. It is written by `llm/showcase.py` from t
 a banner says so. To make the data again:
 
 ```sh
-cd llm && python showcase.py runs/train_eval
+cd llm && python showcase.py runs/latest/train_eval
 cd ../fp && npm run build:showcase
 ```
 
